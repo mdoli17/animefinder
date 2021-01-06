@@ -1,0 +1,56 @@
+
+
+<html>
+    <style>
+        .searchfield 
+        {
+            text-align: center;
+        }
+
+        input 
+        {
+            border-radius: 3ch;
+            border-style:solid;
+            width: 50%;
+            height: 5%;
+            text-align: center;
+            font-size: 2ch;
+        }
+
+        ::-webkit-input-placeholder
+        {
+            text-align: center;
+            font-size: 125%;
+        }
+    </style>
+
+
+    <head>
+        <title>Find your character</title>
+    </head>
+    
+    <body>
+        <script>
+            const APIURL = "http://www.animecharactersdatabase.com/api_series_characters.php?character_q=mikasa";
+            async function getCharacter() {
+                const response = await fetch(APIURL, {mode: "cors"});
+                const data = await response.json();
+                console.log(data);
+            }
+
+            function onSearchEntered() 
+            {
+                var name = document.getElementById("CHARACTERNAME").value;
+                
+                document.getElementById("NAMES").innerHTML += " " + name; // Create a container and add it to view containing "name"
+                document.getElementById("CHARACTERNAME").value = ""
+                getCharacter();
+            }
+        </script>
+
+        <div class="searchfield">
+            <input type="text" placeholder="Enter character traits" id="CHARACTERNAME" onchange="onSearchEntered()">
+            <p id="NAMES"></p>
+        </div>
+    </body>
+</html>
