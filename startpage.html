@@ -7,7 +7,7 @@
             text-align: center;
         }
 
-        input 
+        .input 
         {
             border-radius: 3ch;
             border-style:solid;
@@ -21,6 +21,10 @@
         {
             text-align: center;
             font-size: 125%;
+        }
+
+        body {
+            background: url(background.jpg) no-repeat center center fixed;
         }
     </style>
 
@@ -38,11 +42,9 @@
                 const data = await response.json();
                 
                 data.forEach(element => {
-                    if(element.eye_color == eyecolour && element.hair_color == haircolour) 
+                    if(element.eye_color == eyecolour && element.hair_color == haircolour && element.gender == gender) 
                     {
-                        
-                        console.log(element.name);
-                        
+                        console.log(element.name);   
                     }
                 });  
             }
@@ -87,7 +89,7 @@
         </script>
 
         <div class="searchfield">
-            <input type="text" placeholder="Enter character traits" id="TEXTINPUT" onchange="onSearchEntered()">
+            <input class="input" type="text" placeholder="Enter character traits" id="TEXTINPUT" onchange="onSearchEntered()">
 
             <form>
                 <label for="eyecolour">Eye Colour: </label>
@@ -119,13 +121,9 @@
                 </select>
                 
                 <label for="age">Age: </label>
-                <select name="age" id="age" onchange="onDropChanged()">
-                    <option value="Red">Red</option>
-                    <option value="Blue">Blue</option>
-                </select>
+                <input type="number" min="1" max="100">
                 
                 <button onclick="onFindPressed()">Find</button>
-                <input type="number" min="1" max="100">
             </form>
         </div>
     </body>
