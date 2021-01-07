@@ -31,26 +31,90 @@
     
     <body>
         <script>
-            const APIURL = "http://www.animecharactersdatabase.com/api_series_characters.php?character_q=mikasa";
-            async function getCharacter() {
-                const response = await fetch(APIURL, {mode: "cors"});
+            const HomeURL = "https://ghibliapi.herokuapp.com/people";
+            
+            async function getCharacter(color) {
+                const response = await fetch(HomeURL, {mode: "cors"});
                 const data = await response.json();
-                console.log(data);
+                
+                data.forEach(element => {
+                    if(element.eye_color == color) 
+                    {
+                        console.log(element.name);
+                    }
+                });  
+            }
+
+            function parseInput(input) 
+            {
+                var res = input.split(" ");
+                
+                if(Object.values(Colors).includes("Red"))
+                {
+                    console.log(res[0]);
+                    return res[0];
+                }
+                console.log("dddd");
+                return "ASDASD ";
             }
 
             function onSearchEntered() 
             {
-                var name = document.getElementById("CHARACTERNAME").value;
+                var input = document.getElementById("TEXTINPUT").value;
+                document.getElementById("TEXTINPUT").value = ""
+
+                var color = parseInput(input);
                 
-                document.getElementById("NAMES").innerHTML += " " + name; // Create a container and add it to view containing "name"
-                document.getElementById("CHARACTERNAME").value = ""
-                getCharacter();
+                getCharacter(color);
+            }
+
+
+            function onFindPressed() {
+                console.log("AE");
             }
         </script>
 
         <div class="searchfield">
-            <input type="text" placeholder="Enter character traits" id="CHARACTERNAME" onchange="onSearchEntered()">
-            <p id="NAMES"></p>
+            <input type="text" placeholder="Enter character traits" id="TEXTINPUT" onchange="onSearchEntered()">
+
+            <form>
+                <label for="eyecolour">Eye Colour: </label>
+                <select name="eyecolour" id="eyecolour">
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                    <option value="Grey">Grey</option>
+                    <option value="Black">Black</option>
+                    <option value="Dark Brown">Dark Brown</option>
+                    <option value="Brown">Brown</option>
+                </select>
+
+                <label for="hairColour">Hair Colour: </label>
+                <select name="hairColour" id="hairColour">
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                    <option value="Grey">Grey</option>
+                    <option value="Black">Black</option>
+                    <option value="Dark Brown">Dark Brown</option>
+                    <option value="Brown">Brown</option>
+                </select>
+
+                <label for="gender">Gender: </label>
+                <select name="gender" id="gender">
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                </select>
+                
+
+                <label for="age">Age: </label>
+                <select name="age" id="age">
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                </select>
+                
+                <button onclick="onFindPressed()">Find</button>
+            </form>
         </div>
     </body>
 </html>
