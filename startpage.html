@@ -1,5 +1,3 @@
-
-
 <html>
     <style>
         .searchfield 
@@ -22,7 +20,7 @@
             text-align: center;
             font-size: 125%;
         }
-
+        
         body {
             background: url(background.jpg) no-repeat center center fixed;
         }
@@ -31,7 +29,7 @@
         {
             width: 10%;
             display: inline-block;
-            margin-right: 1%;
+            margin-right: 2%;
         }
 
         #characterimages
@@ -39,7 +37,8 @@
             overflow-x: scroll;
             overflow-y: hidden;
             white-space: nowrap;
-            
+            display: flex;
+            justify-content: center;
         }
 
         #characterimages ::-webkit-scrollbar {
@@ -57,76 +56,189 @@
         <script>
             const HomeURL = "https://ghibliapi.herokuapp.com/people";
             
-            async function getCharacter(eyecolour, haircolour, gender, age) {
-                const response = await fetch(HomeURL, {mode: "cors"});
-                const data = await response.json();
-                
-                data.forEach(element => {
-                    if(element.eye_color == eyecolour && element.hair_color == haircolour && element.gender == gender) 
-                    {
-                        console.log(element.name);   
-                    }
-                });  
+            var characterAttributes;
+            
+            function constructor()
+            {
+                characterAttributes = new CharacterAttributes();
+            }
+            
+            window.onload = constructor();
+
+            function CharacterAttributes()
+            {
+                this.name = null;
+                this.age = null;
+                this.eyecolor = null;
+                this.haircolor = null;
+                this.specie = null;
+                this.gender = null;
             }
 
-            async function getCount()
-            {
-                const response = await fetch(HomeURL, {mode: "cors"});
-                const data = await response.json();
-                
-                return data.length;
-            }
 
-            function parseInput(input) 
+            /*
+                Called when user enters something in search field
+                Should get the input and call a parser for it
+                Clear the search field
+            */
+            function onSearchEntered()
             {
-                var res = input.split(" ");
+                var input = document.getElementById("userinput").value;
+                document.getElementById("userinput").value = "";
+                parseInput(input);
+            }   
+
+            /*
+                Should parse the given text
+                Text can be given in any format
                 
-                if(Object.values(Colors).includes("Red"))
+                Successful parsing cases:
+                    The last word is a Character attribute and the words before are adjactives
+                    Number + "Years old"
+                    Specie type e.g: "God", "Human", "Cat" ... 
+                    Gender
+                    Name
+                
+                Fill in CharacterAttributes struct with given parsed input
+            */
+            function parseInput(text) 
+            {
+                var words = text.split(" ");
+
+                var last = words[words.length - 1].toLowerCase();
+                
+                if(last == "eyes")
                 {
-                    console.log(res[0]);
-                    return res[0];
+                    var eyecolor = words[0];
+                    characterAttributes.eyecolor = eyecolor;
+                    console.log("The user is trying to add an EYE attribute");
                 }
-                console.log("dddd");
-                return "ASDASD ";
+                if(last == "hair")
+                {
+                    console.log("The user is trying to add an HAIR attribute");
+                }      
             }
 
-            function onSearchEntered() 
+            /*
+                Gets JSON data according to the CharacterAttributes
+            */
+            function onFindPressed() 
+            {
+                var data = getJSONData();
+                var newData = [];
+                data.then((value) => {
+                    value.forEach(element => {
+                        if(element.eye_color == characterAttributes.eyecolor)
+                        {
+                            newData.push(element);
+                        }    
+                    });
+                    updateUI(newData);
+                });
+
+            }
+
+
+            // Updates the Scrollable Div with Data
+            function updateUI(dataArray)
             {
                 document.getElementById("characterimages").textContent = " ";
-
-                var count = getCount();
-                count.then((value) => {
-                    for(var i = 0; i < value; i++)
-                    {
-                        var imgelem = document.createElement("img");
-                        imgelem.setAttribute("src", "testimage.png");
-                        imgelem.setAttribute("class", "testimages");
-                        document.getElementById("characterimages").appendChild(imgelem);
-                    }
-                });
                 
-
-
+                var count = dataArray.length;
+                for(var i = 0; i < count; i++)
+                {
+                    var imgelem = document.createElement("img");
+                    imgelem.setAttribute("src", "testimage.png");
+                    imgelem.setAttribute("class", "testimages");
+                    document.getElementById("characterimages").appendChild(imgelem);
+                }
             }
 
 
-            function onFindPressed() {
-                console.log("AE");
+            async function getJSONData()
+            {
+                const response = await fetch(HomeURL, {mode: "cors"});
+                const data = await response.json();
+                return data;
             }
-
-            function onDropChanged() {
-                var eyecolour = document.getElementById("eyecolour").value;
-                var haircolour = document.getElementById("haircolour").value;
-                var gender = document.getElementById("gender").value;
-                var age = document.getElementById("age").value;
-
-                getCharacter(eyecolour, haircolour, gender, age);
+            // async function getCharacter(eyecolour, haircolour, gender, age) {
+            //     const response = await fetch(HomeURL, {mode: "cors"});
+            //     const data = await response.json();
                 
-            }
+            //     data.forEach(element => {
+            //         if(element.eye_color == eyecolour && element.hair_color == haircolour && element.gender == gender) 
+            //         {
+            //             console.log(element.name);   
+            //         }
+            //     });  
+            // }
+
+            // async function getData() 
+            // {
+            //     const response = await fetch(HomeURL, {mode: "cors"});
+            //     const data = await response.json();
+
+            //     return data;
+            // }
+
+            // async function getCount()
+            // {
+            //     const response = await fetch(HomeURL, {mode: "cors"});
+            //     const data = await response.json();
+                
+            //     return data.length;
+            // }
+
+            // function parseInput(input) 
+            // {
+            //     var res = input.split(" ");
+                
+            //     if(Object.values(Colors).includes("Red"))
+            //     {
+            //         console.log(res[0]);
+            //         return res[0];
+            //     }
+            //     console.log("dddd");
+            //     return "ASDASD ";
+            // }
+
+            // function onSearchEntered() 
+            // {
+            //     document.getElementById("characterimages").textContent = " ";
+            //     var data = getData();
+            //     data.then((value) => {
+            //         var count = value.length;
+            //         for(var i = 0; i < count; i++)
+            //         {
+            //             var imgelem = document.createElement("img");
+            //             imgelem.setAttribute("src", "testimage.png");
+            //             imgelem.setAttribute("class", "testimages");
+            //             document.getElementById("characterimages").appendChild(imgelem);
+            //         }
+            //     });
+            // }
+
+
+            // function onFindPressed() {
+            //     console.log("AE");
+            // }
+
+            // function onDropChanged() {
+            //     var eyecolour = document.getElementById("eyecolour").value;
+            //     var haircolour = document.getElementById("haircolour").value;
+            //     var gender = document.getElementById("gender").value;
+            //     var age = document.getElementById("age").value;
+
+            //     getCharacter(eyecolour, haircolour, gender, age);
+            // }
+
+
+
+
         </script>
 
         <div class="searchfield">
-            <input class="input" type="text" placeholder="Enter character traits" id="TEXTINPUT" onchange="onSearchEntered()">
+            <input class="input" type="text" placeholder="Enter character traits" id="userinput" onchange="onSearchEntered()">
 
             <form>
                 <label for="eyecolour">Eye Colour: </label>
@@ -160,8 +272,8 @@
                 <label for="age">Age: </label>
                 <input id="age" type="number" min="1" max="100">
                 
-                <button onclick="onFindPressed()">Find</button>
             </form>
+            <button onclick="onFindPressed()">Find</button>
         </div>
 
         <div id="characterimages">
