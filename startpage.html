@@ -26,6 +26,26 @@
         body {
             background: url(background.jpg) no-repeat center center fixed;
         }
+
+        .testimages 
+        {
+            width: 10%;
+            display: inline-block;
+            margin-right: 1%;
+        }
+
+        #characterimages
+        {
+            overflow-x: scroll;
+            overflow-y: hidden;
+            white-space: nowrap;
+            
+        }
+
+        #characterimages ::-webkit-scrollbar {
+            display: none;
+        }
+
     </style>
 
 
@@ -49,6 +69,14 @@
                 });  
             }
 
+            async function getCount()
+            {
+                const response = await fetch(HomeURL, {mode: "cors"});
+                const data = await response.json();
+                
+                return data.length;
+            }
+
             function parseInput(input) 
             {
                 var res = input.split(" ");
@@ -64,12 +92,21 @@
 
             function onSearchEntered() 
             {
-                var input = document.getElementById("TEXTINPUT").value;
-                document.getElementById("TEXTINPUT").value = ""
+                document.getElementById("characterimages").textContent = " ";
 
-                var color = parseInput(input);
+                var count = getCount();
+                count.then((value) => {
+                    for(var i = 0; i < value; i++)
+                    {
+                        var imgelem = document.createElement("img");
+                        imgelem.setAttribute("src", "testimage.png");
+                        imgelem.setAttribute("class", "testimages");
+                        document.getElementById("characterimages").appendChild(imgelem);
+                    }
+                });
                 
-                getCharacter(color);
+
+
             }
 
 
@@ -121,10 +158,14 @@
                 </select>
                 
                 <label for="age">Age: </label>
-                <input type="number" min="1" max="100">
+                <input id="age" type="number" min="1" max="100">
                 
                 <button onclick="onFindPressed()">Find</button>
             </form>
+        </div>
+
+        <div id="characterimages">
+            
         </div>
     </body>
 </html>
