@@ -20,7 +20,7 @@
             text-align: center;
             font-size: 125%;
         }
-        
+
         body {
             background: url(background.jpg) no-repeat center center fixed;
         }
@@ -43,6 +43,20 @@
 
         #characterimages ::-webkit-scrollbar {
             display: none;
+        }
+
+        .attributeBox 
+        {
+            border-radius: 3ch;
+            border-width: 1px;
+            border-style: solid;
+            background-color: thistle;
+        }
+
+        .attributeBoxXButton
+        {
+            border-style: none;
+            background-color: transparent;
         }
 
     </style>
@@ -75,6 +89,8 @@
                 this.gender = null;
             }
 
+            let eyeColors = ["Black", "Blue", "Brown", "Grey", "Green", "Hazel", "Red", "White", "Yellow", "Emerald"];
+            let hairColors = ["Black", "Blonde", "Brown", "Grey", "White", "Light", "Orange", "Beige"];
 
             /*
                 Called when user enters something in search field
@@ -109,14 +125,60 @@
                 
                 if(last == "eyes")
                 {
-                    var eyecolor = words[0];
+                    var eyecolor;
+                    for(var i = 0; i < words.length - 1; i++)
+                    {
+                        if (eyeColors.includes(words[i]))
+                        {
+                            eyecolor = words[i];
+                            break;
+                        }
+                    }
                     characterAttributes.eyecolor = eyecolor;
+                    addCharacterAttributeToUI("eyecolor");
+
                     console.log("The user is trying to add an EYE attribute");
+                    console.log(characterAttributes.eyecolor);
                 }
-                if(last == "hair")
+                else if(last == "hair")
                 {
+                    var haircolor = words[0];
+                    characterAttributes.haircolor = haircolor;
+                    addCharacterAttributeToUI("haircolor");
                     console.log("The user is trying to add an HAIR attribute");
                 }      
+            }
+
+            function addCharacterAttributeToUI(attribute)
+            {
+                var attributeDiv = document.createElement("div");
+                attributeDiv.setAttribute("class", "attributeBox");
+
+                var label = document.createElement("label");
+                label.innerHTML = attribute;
+
+                var xButton = document.createElement("button");
+                xButton.setAttribute("class", "attributeBoxXButton");
+                xButton.innerHTML = "x";
+                xButton.addEventListener('click', function(){
+                    switch (attribute) {
+                        case "eyecolor":
+                            console.log("Going To Remove EyeColour");
+                            characterAttributes.eyecolor = null;
+                            break;
+                    
+                        case "haircolor":
+                        console.log("Going To Remove EyeColour");
+                            characterAttributes.haircolor = null;
+                            break;
+                    }
+                    document.getElementById("characterattributes").removeChild(attributeDiv);
+                });
+                attributeDiv.appendChild(label);
+                attributeDiv.appendChild(xButton);
+
+                
+                document.getElementById("characterattributes").appendChild(attributeDiv);
             }
 
             /*
@@ -128,7 +190,13 @@
                 var newData = [];
                 data.then((value) => {
                     value.forEach(element => {
-                        if(element.eye_color == characterAttributes.eyecolor)
+                        console.log(element.eye_color == characterAttributes.eyecolor);
+                        
+                        if((element.eye_color == characterAttributes.eyecolor || characterAttributes.eyecolor == null) 
+                        && (element.hair_color == characterAttributes.haircolor || characterAttributes.haircolor == null)
+                        && (element.age == characterAttributes.age || characterAttributes.age == null)
+                        && (element.gender == characterAttributes.gender || characterAttributes.gender == null)
+                        && (element.name == characterAttributes.name || characterAttributes.name == null))
                         {
                             newData.push(element);
                         }    
@@ -161,119 +229,16 @@
                 const data = await response.json();
                 return data;
             }
-            // async function getCharacter(eyecolour, haircolour, gender, age) {
-            //     const response = await fetch(HomeURL, {mode: "cors"});
-            //     const data = await response.json();
-                
-            //     data.forEach(element => {
-            //         if(element.eye_color == eyecolour && element.hair_color == haircolour && element.gender == gender) 
-            //         {
-            //             console.log(element.name);   
-            //         }
-            //     });  
-            // }
-
-            // async function getData() 
-            // {
-            //     const response = await fetch(HomeURL, {mode: "cors"});
-            //     const data = await response.json();
-
-            //     return data;
-            // }
-
-            // async function getCount()
-            // {
-            //     const response = await fetch(HomeURL, {mode: "cors"});
-            //     const data = await response.json();
-                
-            //     return data.length;
-            // }
-
-            // function parseInput(input) 
-            // {
-            //     var res = input.split(" ");
-                
-            //     if(Object.values(Colors).includes("Red"))
-            //     {
-            //         console.log(res[0]);
-            //         return res[0];
-            //     }
-            //     console.log("dddd");
-            //     return "ASDASD ";
-            // }
-
-            // function onSearchEntered() 
-            // {
-            //     document.getElementById("characterimages").textContent = " ";
-            //     var data = getData();
-            //     data.then((value) => {
-            //         var count = value.length;
-            //         for(var i = 0; i < count; i++)
-            //         {
-            //             var imgelem = document.createElement("img");
-            //             imgelem.setAttribute("src", "testimage.png");
-            //             imgelem.setAttribute("class", "testimages");
-            //             document.getElementById("characterimages").appendChild(imgelem);
-            //         }
-            //     });
-            // }
-
-
-            // function onFindPressed() {
-            //     console.log("AE");
-            // }
-
-            // function onDropChanged() {
-            //     var eyecolour = document.getElementById("eyecolour").value;
-            //     var haircolour = document.getElementById("haircolour").value;
-            //     var gender = document.getElementById("gender").value;
-            //     var age = document.getElementById("age").value;
-
-            //     getCharacter(eyecolour, haircolour, gender, age);
-            // }
-
-
-
 
         </script>
 
         <div class="searchfield">
             <input class="input" type="text" placeholder="Enter character traits" id="userinput" onchange="onSearchEntered()">
-
-            <form>
-                <label for="eyecolour">Eye Colour: </label>
-                <select name="eyecolour" id="eyecolour" onchange="onDropChanged()">
-                    <option value="Red">Red</option>
-                    <option value="Blue">Blue</option>
-                    <option value="Green">Green</option>
-                    <option value="Grey">Grey</option>
-                    <option value="Black">Black</option>
-                    <option value="Dark Brown">Dark Brown</option>
-                    <option value="Brown">Brown</option>
-                </select>
-
-                <label for="hairColour">Hair Colour: </label>
-                <select name="hairColour" id="haircolour" onchange="onDropChanged()">
-                    <option value="Red">Red</option>
-                    <option value="Blue">Blue</option>
-                    <option value="Green">Green</option>
-                    <option value="Grey">Grey</option>
-                    <option value="Black">Black</option>
-                    <option value="Dark Brown">Dark Brown</option>
-                    <option value="Brown">Brown</option>
-                </select>
-
-                <label for="gender">Gender: </label>
-                <select name="gender" id="gender" onchange="onDropChanged()">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                
-                <label for="age">Age: </label>
-                <input id="age" type="number" min="1" max="100">
-                
-            </form>
             <button onclick="onFindPressed()">Find</button>
+        </div>
+
+        <div id="characterattributes">
+
         </div>
 
         <div id="characterimages">
