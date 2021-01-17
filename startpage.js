@@ -11,18 +11,12 @@ function ArrayRemove(array, str)
         array.splice(index, 1);
 }
 
+function isNumber(str)
+{
+    return true;
+}
 
-function include(file) { 
-  
-  var script  = document.createElement('script'); 
-  script.src  = file; 
-  script.type = 'text/javascript'; 
-  script.defer = true; 
-  
-  document.getElementsByTagName('head').item(0).appendChild(script); 
-} 
-
-const HomeURL = "https://ghibliapi.herokuapp.com/people";
+const HomeURL = "https://ghibliapi.herokuapp.com/";
 const characterFolder = "Images/Characters/";
 
 let eyeColors = ["Black", "Blue", "Brown", "Grey", "Green", "Hazel", "Red", "White", "Yellow", "Emerald"];
@@ -48,11 +42,7 @@ function CharacterAttributes()
     this.gender = null;
 }
 
-/*
-    Called when user enters something in search field
-    Should get the input and call a parser for it
-    Clear the search field
-*/
+
 function onSearchEntered()
 {
     var input = document.getElementById("userinput").value;
@@ -60,72 +50,84 @@ function onSearchEntered()
     parseInput(input);
 }   
 
+
 /*
-    Should parse the given text
-    Text can be given in any format
-    
-    Successful parsing cases:
-        The last word is a Character attribute and the words before are adjactives
-        Number + "Years old"
-        Specie type e.g: "God", "Human", "Cat" ... 
-        Gender
-        Name
-    
-    Fill in CharacterAttributes struct with given parsed input
+    Eye color
+    Hair Color
+    Age
+    Gender
+    Specie
 */
 function parseInput(text) 
 {
     var words = text.toLowerCase().split(" ");
-    
     console.log(words);
-    var last = words[words.length - 1];
-    
-    if(last == "eyes")
-    {
-        if(!enteredAttributes.includes("eyecolor"))
-        {
-            var eyecolor;
-            for(var i = 0; i < words.length - 1; i++)
-            {
-                var color = capitalize(words[i]);
-                if (eyeColors.includes(color))
-                {
-                    eyecolor = color;
-                    break;
-                }
-            }
-            enteredAttributes.push("eyecolor");
-            characterAttributes.eyecolor = eyecolor;
-            addCharacterAttributeToUI("Eye Color");
-            console.log("The user is trying to add an EYE attribute");
-        }
-        else 
-        {
-            console.log("The user is trying to add a EYE attribute, which is already added");
-            console.log("EYE attribute should be updated");
-        }
-    }
-    else if(last == "hair")
-    {
-        if(!enteredAttributes.includes("haircolor"))
-        {
-            var haircolor = capitalize(words[0]);
-            characterAttributes.haircolor = haircolor;
-            enteredAttributes.push("haircolor");
-            addCharacterAttributeToUI("haircolor");
-            console.log("The user is trying to add an HAIR attribute");
-        } 
-        else 
-        {
 
-            alert("The user is trying to add a HAIR attribute, which is already added\nHAIR attribute should be updated")
+    // Eyes or Hair color
+    if(words.length == 2)
+    {
+        if(words[1] == "eyes")
+        {
+            if(!enteredAttributes.includes("eyecolor"))
+            {
+                enteredAttributes.push("eyecolor");
+                characterAttributes.eyecolor = capitalize(words[0]);
+                addCharacterAttributeToUI("eyecolor");
+            }
+        }   
+        else if(words[1] == "hair")
+        {
+            if(!enteredAttributes.includes("haircolor"))
+            {
+                characterAttributes.haircolor = capitalize(words[0]);
+                enteredAttributes.push("haircolor");
+                addCharacterAttributeToUI("haircolor");
+            }
         }
-    }      
-    else if(words[0] == "male" || words[0] == "female"){
-        characterAttributes.gender = capitalize(words[0]);
-        addCharacterAttributeToUI("gender");
     }
-    
+    else if (words.length == 1)
+    {
+        if(words[0] == "male" || words[0] == "female")
+        {
+            if(!enteredAttributes.includes("gender"))
+            {
+                alert("adding gender");
+                characterAttributes.gender = capitalize(words[0]);
+                enteredAttributes.push("gender");
+                addCharacterAttributeToUI("gender");
+            }
+        }
+        else 
+        {
+            alert("Trying to add specie");
+            if(!enteredAttributes.includes("specie"))
+            {
+                characterAttributes.specie = capitalize(words[0]);
+                enteredAttributes.push("specie");
+                addCharacterAttributeToUI("specie");
+            }
+        }
+    }
+    else if (words.length == 3)
+    {
+        if(isNumber(words[0]) && words[1] == "years" && words[2] == "old")
+        {
+            if(!enteredAttributes.includes("age"))
+            {
+                characterAttributes.age = words[0];
+                enteredAttributes.push("age");
+                addCharacterAttributeToUI("age");
+            }
+        }
+    }
+    else
+    {
+        alert("Couldn't add a given attribute")
+    }
+    if(words.includes("boobs"))
+    {
+        alert("what are you doing, you dirty pervert");
+    }
 }
 
 function addCharacterAttributeToUI(attribute)
@@ -141,19 +143,23 @@ function addCharacterAttributeToUI(attribute)
     xButton.innerHTML = "x";
     xButton.addEventListener('click', function(){
         switch (attribute) {
-            case "Eye Color":
+            case "eyecolor":
                 characterAttributes.eyecolor = null;
-                ArrayRemove(enteredAttributes, "eyecolor");
                 break;
-        
             case "haircolor":
                 characterAttributes.haircolor = null;
-                ArrayRemove(enteredAttributes, "haircolor");
                 break;
             case "gender":
                 characterAttributes.gender = null;
                 break;
+            case "age":
+                characterAttributes.age = null;
+                break;
+            case "specie":
+                characterAttributes.specie = null;
+                break;
         }
+        ArrayRemove(enteredAttributes, attribute);
         document.getElementById("characterattributes").removeChild(attributeDiv);
     });
     attributeDiv.appendChild(label);
@@ -163,20 +169,36 @@ function addCharacterAttributeToUI(attribute)
     document.getElementById("characterattributes").appendChild(attributeDiv);
 }
 
-/*
-    Gets JSON data according to the CharacterAttributes
-*/
 function onFindPressed() 
 {
-    var data = getJSONData();
+    var data = getJSONData("people");
+    var species = getJSONData("species");
     var newData = [];
     data.then((value) => {
         value.forEach(element => {
             if((element.eye_color == characterAttributes.eyecolor || characterAttributes.eyecolor == null)
             && (element.hair_color == characterAttributes.haircolor || characterAttributes.haircolor == null)
-            && !(characterAttributes.eyecolor == null && characterAttributes.haircolor == null))
+            && (element.gender == characterAttributes.gender || characterAttributes.gender == null)
+            && (element.age == characterAttributes.age || characterAttributes.age == null)
+            && !(characterAttributes.eyecolor == null && characterAttributes.haircolor == null && characterAttributes.gender == null && characterAttributes.age == null && characterAttributes.specie == null))
             {
-                newData.push(element);
+                if(characterAttributes.specie == null)
+                {
+                    newData.push(element);
+                }
+                else {
+                    species.then((speciearray) => {
+                        for(let e of speciearray)
+                        {
+                            if (e.name == characterAttributes.specie)
+                            {
+                                console.log(characterAttributes.specie);
+                                newData.push(element);
+                                break;
+                            }
+                        }
+                    });
+                }
             }    
         });
         updateUI(newData);
@@ -184,8 +206,6 @@ function onFindPressed()
 
 }
 
-
-// Updates the Scrollable Div with Data
 function updateUI(dataArray)
 {
     document.getElementById("container").textContent = " ";
@@ -212,9 +232,9 @@ function updateUI(dataArray)
 }
 
 
-async function getJSONData()
+async function getJSONData(str)
 {
-    const response = await fetch(HomeURL, {mode: "cors"});
+    const response = await fetch(HomeURL + str, {mode: "cors"});
     const data = await response.json();
     return data;
 }
