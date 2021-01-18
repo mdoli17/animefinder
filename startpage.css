@@ -44,6 +44,8 @@ body {
     overflow-x: hidden;
     max-height: 80vh;
     margin-top: 1vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
 .box {
     margin: 1%;
@@ -78,4 +80,18 @@ body {
     justify-content: center;
     width: 50vw;
     margin-left: 25vw;
+}
+
+.characterdetails {
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+}
+
+.characterdetails label{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: xx-large;
+    font: bold;
+    color:rgb(209, 117, 117);
 }

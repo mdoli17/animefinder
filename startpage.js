@@ -207,12 +207,36 @@ function updateUI(dataArray)
         var imgBox = document.createElement("div");
         imgBox.setAttribute("class", "box");
 
+        var detaildiv = document.createElement("div");
+        detaildiv.setAttribute("class", "characterdetails");
+        var namelabel = document.createElement("label");
+        namelabel.innerHTML = "Name: " + dataArray[i].name;
+
+        var genderlabel = document.createElement("label");
+        genderlabel.innerHTML = "Gender: " + dataArray[i].gender;
+
+        var agelabel = document.createElement("label");
+        agelabel.innerHTML = "Age: " + dataArray[i].age;
+
+        var eyelabel = document.createElement("label");
+        eyelabel.innerHTML = "Eye Color: " + dataArray[i].eye_color;
+
+        var hairlabel = document.createElement("label");
+        hairlabel.innerHTML = "Eye Color: " + dataArray[i].hair_color;
+
+        detaildiv.appendChild(namelabel);
+        detaildiv.appendChild(genderlabel);
+        detaildiv.appendChild(agelabel);
+        detaildiv.appendChild(eyelabel);
+        detaildiv.appendChild(hairlabel);
+        
         var imgelem = new Image();
         imgelem.src = characterFolder + dataArray[i].name + ".png";
         imgelem.setAttribute("onerror", "this.src='testimage.png'");
         imgelem.setAttribute("class", "characterImages");
         
         imgBox.appendChild(imgelem);
+        imgBox.appendChild(detaildiv);
         document.getElementById("container").appendChild(imgBox);
     }
 }
@@ -224,11 +248,6 @@ async function getJSONData(str)
     const data = await response.json();
     return data;
 }
-
-async function getNames() {
-
-}
-
 
 
 
