@@ -172,7 +172,7 @@ function addCharacterAttributeToUI(attribute)
 function onFindPressed() 
 {
     var data = getJSONData("people");
-    var species = getJSONData("species");
+    
     var newData = [];
     data.then((value) => {
         value.forEach(element => {
@@ -187,17 +187,7 @@ function onFindPressed()
                     newData.push(element);
                 }
                 else {
-                    species.then((speciearray) => {
-                        for(let e of speciearray)
-                        {
-                            if (e.name == characterAttributes.specie)
-                            {
-                                console.log(characterAttributes.specie);
-                                newData.push(element);
-                                break;
-                            }
-                        }
-                    });
+                    
                 }
             }    
         });
@@ -238,13 +228,40 @@ async function getJSONData(str)
     const data = await response.json();
     return data;
 }
+const asyncForEach = async (array, callback) => {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
+async function getNames() {
+    var data = getJSONData("people");
+    var newdata = [];
+    data.then((safedata) => {
+        const start = async () => {
+            await asyncForEach(safedata, async (value) => {
+                
+                var page = value.species.split("/");
+                getspecies("species/" + page[page.length - 1]);
 
-function getNames() {
-    var data = getJSONData();
-    data.then((element) => {
-        element.forEach(value => {
-            console.log(value.name);
-        });
+            });
+            console.log("Peaple Fetched");
+        }
+        start();
+    });
+    
+}
+
+async function getspecies(link)
+{
+    var speciedata = getJSONData(link)
+    speciedata.then((safedata) => {
+        const start = async() => {
+            await asyncForEach(safedata, async (value) => {
+                console.log(value.name);
+            });
+            console.log("Done");
+        }
+        start();
     });
 }
 
