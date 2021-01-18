@@ -50,14 +50,6 @@ function onSearchEntered()
     parseInput(input);
 }   
 
-
-/*
-    Eye color
-    Hair Color
-    Age
-    Gender
-    Specie
-*/
 function parseInput(text) 
 {
     var words = text.toLowerCase().split(" ");
@@ -169,31 +161,35 @@ function addCharacterAttributeToUI(attribute)
     document.getElementById("characterattributes").appendChild(attributeDiv);
 }
 
-function onFindPressed() 
+async function onFindPressed() 
 {
-    var data = getJSONData("people");
-    
+    var data = await getJSONData("people");
     var newData = [];
-    data.then((value) => {
-        value.forEach(element => {
-            if((element.eye_color == characterAttributes.eyecolor || characterAttributes.eyecolor == null)
-            && (element.hair_color == characterAttributes.haircolor || characterAttributes.haircolor == null)
-            && (element.gender == characterAttributes.gender || characterAttributes.gender == null)
-            && (element.age == characterAttributes.age || characterAttributes.age == null)
-            && !(characterAttributes.eyecolor == null && characterAttributes.haircolor == null && characterAttributes.gender == null && characterAttributes.age == null && characterAttributes.specie == null))
+
+    for (let index = 0; index < data.length; index++) {
+        var element = data[index];
+        if((element.eye_color == characterAttributes.eyecolor || characterAttributes.eyecolor == null)
+        && (element.hair_color == characterAttributes.haircolor || characterAttributes.haircolor == null)
+        && (element.gender == characterAttributes.gender || characterAttributes.gender == null)
+        && (element.age == characterAttributes.age || characterAttributes.age == null)
+        && !(characterAttributes.eyecolor == null && characterAttributes.haircolor == null && characterAttributes.gender == null && characterAttributes.age == null && characterAttributes.specie == null))
+        {
+            if(characterAttributes.specie == null)
             {
-                if(characterAttributes.specie == null)
+                newData.push(element);
+            }
+            else 
+            {
+                var page = element.species.split("/");
+                var speciedata = await getJSONData("species/" + page[page.length - 1]);
+                if(speciedata.name == characterAttributes.specie)
                 {
                     newData.push(element);
                 }
-                else {
-                    
-                }
-            }    
-        });
-        updateUI(newData);
-    });
-
+            }
+        }    
+    }
+    updateUI(newData);
 }
 
 function updateUI(dataArray)
@@ -228,42 +224,11 @@ async function getJSONData(str)
     const data = await response.json();
     return data;
 }
-const asyncForEach = async (array, callback) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
+
 async function getNames() {
-    var data = getJSONData("people");
-    var newdata = [];
-    data.then((safedata) => {
-        const start = async () => {
-            await asyncForEach(safedata, async (value) => {
-                
-                var page = value.species.split("/");
-                getspecies("species/" + page[page.length - 1]);
 
-            });
-            console.log("Peaple Fetched");
-        }
-        start();
-    });
-    
 }
 
-async function getspecies(link)
-{
-    var speciedata = getJSONData(link)
-    speciedata.then((safedata) => {
-        const start = async() => {
-            await asyncForEach(safedata, async (value) => {
-                console.log(value.name);
-            });
-            console.log("Done");
-        }
-        start();
-    });
-}
 
 
 
