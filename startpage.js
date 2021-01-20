@@ -209,26 +209,28 @@ function updateUI(dataArray)
 
         var detaildiv = document.createElement("div");
         detaildiv.setAttribute("class", "characterdetails");
-        var namelabel = document.createElement("label");
-        namelabel.innerHTML = "Name: " + dataArray[i].name;
 
-        var genderlabel = document.createElement("label");
-        genderlabel.innerHTML = "Gender: " + dataArray[i].gender;
+        var detailarr = ["name", "age", "gender", "eyecolor", "haircolor"];
+        
+        for(var j = 0; j < detailarr.length; j++)
+        {
+            var detailbox = document.createElement("div");
+            detailbox.setAttribute("class", "characterdetailbox");
+            
+            var headlabel = document.createElement("label");
+            headlabel.setAttribute("class","characterdetailhead");
+            var infolabel = document.createElement("label");
+            infolabel.setAttribute("class", "characterdetailinfo")
 
-        var agelabel = document.createElement("label");
-        agelabel.innerHTML = "Age: " + dataArray[i].age;
+            headlabel.innerHTML = detailarr[j] + ": ";
+            infolabel.innerHTML = dataArray[i].name;
 
-        var eyelabel = document.createElement("label");
-        eyelabel.innerHTML = "Eye Color: " + dataArray[i].eye_color;
-
-        var hairlabel = document.createElement("label");
-        hairlabel.innerHTML = "Eye Color: " + dataArray[i].hair_color;
-
-        detaildiv.appendChild(namelabel);
-        detaildiv.appendChild(genderlabel);
-        detaildiv.appendChild(agelabel);
-        detaildiv.appendChild(eyelabel);
-        detaildiv.appendChild(hairlabel);
+            detailbox.appendChild(headlabel);
+            detailbox.appendChild(infolabel);
+            
+            detaildiv.appendChild(detailbox);
+        }
+        
         
         var imgelem = new Image();
         imgelem.src = characterFolder + dataArray[i].name + ".png";

@@ -50,6 +50,7 @@ body {
 .box {
     margin: 1%;
     display: flex;
+    background-color: burlywood;
 }
 
 .box img {
@@ -89,9 +90,16 @@ body {
     margin-left: 5%;
 }
 
-.characterdetails label{
+.characterdetailhead{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: xx-large;
     font: bold;
     color:rgb(209, 117, 117);
+}
+
+.characterdetailinfo {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: xx-large;
+    font: bold;
+    color:rgb(117, 139, 209);
 }
