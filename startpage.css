@@ -58,6 +58,13 @@ body {
     width: 15%;
 }
 
+.box button {
+    /* right: 15vw; */
+    /* width: 200px; */
+    height: 1%;
+    border: 3px solid green;
+    border-radius: 10px;
+}
 
 .attributeBox 
 {
@@ -92,14 +99,14 @@ body {
 
 .characterdetailhead{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: xx-large;
+    /* font-size: xx-large; */
     font: bold;
     color:rgb(209, 117, 117);
 }
 
 .characterdetailinfo {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: xx-large;
+    /* font-size: xx-large; */
     font: bold;
     color:rgb(117, 139, 209);
 }

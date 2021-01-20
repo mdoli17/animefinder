@@ -223,11 +223,27 @@ function updateUI(dataArray)
             infolabel.setAttribute("class", "characterdetailinfo")
 
             headlabel.innerHTML = detailarr[j] + ": ";
-            infolabel.innerHTML = dataArray[i].name;
+            switch (j) {
+                case 0:
+                    infolabel.innerHTML = dataArray[i].name;
+                    break;
+                case 1:
+                    infolabel.innerHTML = dataArray[i].age;
+                    break;
+                case 2:
+                    infolabel.innerHTML = dataArray[i].gender;
+                    break;
+                case 3:
+                    infolabel.innerHTML = dataArray[i].eye_color;
+                    break;
+                case 4: 
+                    infolabel.innerHTML = dataArray[i].hair_color;
+                    break;
+            }
+            
 
             detailbox.appendChild(headlabel);
             detailbox.appendChild(infolabel);
-            
             detaildiv.appendChild(detailbox);
         }
         
@@ -237,8 +253,13 @@ function updateUI(dataArray)
         imgelem.setAttribute("onerror", "this.src='testimage.png'");
         imgelem.setAttribute("class", "characterImages");
         
+        var animebutton = document.createElement("button");
+
+        animebutton.innerHTML = "Go to animepage";
         imgBox.appendChild(imgelem);
         imgBox.appendChild(detaildiv);
+        imgBox.appendChild(animebutton);
+
         document.getElementById("container").appendChild(imgBox);
     }
 }
@@ -263,4 +284,10 @@ function printer()
         document.getElementById("searchfield").style.top = "-50px";
     }
     prevScrollpos = currentScrollPos;
+}
+
+function goToAnime(character)
+{
+    
+    document.location.href = "animepage.html";
 }
