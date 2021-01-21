@@ -1,3 +1,4 @@
+const characterFolder = "Images/Characters/";
 async function getJSONData(str)
 {
     const response = await fetch(str, {mode: "cors"});
@@ -6,11 +7,36 @@ async function getJSONData(str)
 }
 
 
-window.onload = function () {
-    
+window.onload = constructor();
+
+async function constructor()
+{
     var AnimeURL = localStorage.getItem("CharacterFilms");
-    var data = getJSONData(AnimeURL);
-    data.then((value) => {
+    var data = await getJSONData(AnimeURL);
+    updateDetails(data);
+    document.body.style.backgroundImage = "url('Images/Films/" + data.title + "_Background.png')";
+
+    var characters = await getJSONData("https://ghibliapi.herokuapp.com/people");
+    for(let i = 0; i < characters.length; i++)
+    {
+        let character = characters[i];
+        let film = getJSONData(character.films[0]);
+        film.then((v) => {
+            if(v.title == data.title)
+            {
+                var img = new Image();
+                img.src = characterFolder + character.name + ".png";
+                
+                var newdiv = document.createElement("div");
+                newdiv.appendChild(img);
+                document.getElementById("OtherCharacters").appendChild(newdiv);
+            }
+        });
+    }
+}
+
+function updateDetails(value)
+{
         document.getElementById("Title").innerHTML = value.title;
         document.getElementById("Description").innerHTML = value.description;
         document.getElementById("Director").innerHTML = value.director;
@@ -18,6 +44,4 @@ window.onload = function () {
         document.getElementById("Release").innerHTML = value.release_date;
         document.getElementById("Score").innerHTML = value.rt_score;
         document.getElementById("Image").src = "Images/Films/" + value.title + ".png";
-        document.body.style.backgroundImage = "url('Images/Films/" + value.title + "_Background.png')";
-    });
 }
