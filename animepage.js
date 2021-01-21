@@ -35,9 +35,16 @@ async function constructor()
                 {
                     alert(character.name);
                 }
+                var middle = document.createElement("div");
+                middle.setAttribute("class", "CharacterNameDiv");
                 
-                
+                var text = document.createElement("div");
+                text.setAttribute("class", "Text");
+                text.innerHTML = character.name;
+                middle.appendChild(text);
+
                 imgdiv.appendChild(img);
+                imgdiv.appendChild(middle);
                 document.getElementById("CharacterContainer").appendChild(imgdiv);
             }
         });
@@ -54,3 +61,17 @@ function updateDetails(value)
     document.getElementById("Score").innerHTML = value.rt_score;
     document.getElementById("Image").src = "Images/Films/" + value.title + ".png";
 }
+
+
+var prevScrollpos = document.getElementById("container").scrollTop;
+function OnSroll()
+{
+    // var currentScrollPos = document.getElementById("container").scrollTop;
+    // if (prevScrollpos > currentScrollPos) {
+    //     document.getElementById("searchfield").style.top = "1%";
+    // } else {
+    //     document.getElementById("searchfield").style.top = "-50px";
+    // }
+    // prevScrollpos = currentScrollPos;
+}
+
