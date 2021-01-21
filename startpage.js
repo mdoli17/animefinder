@@ -245,6 +245,7 @@ function updateUI(dataArray)
             detailbox.appendChild(headlabel);
             detailbox.appendChild(infolabel);
             detaildiv.appendChild(detailbox);
+            
         }
         
         
