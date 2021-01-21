@@ -252,10 +252,19 @@ function updateUI(dataArray)
         imgelem.src = characterFolder + dataArray[i].name + ".png";
         imgelem.setAttribute("onerror", "this.src='testimage.png'");
         imgelem.setAttribute("class", "characterImages");
+
         
         var animebutton = document.createElement("button");
-
         animebutton.innerHTML = "Go to animepage";
+        (function(x){
+            animebutton.addEventListener('click', function() {
+                goToAnime(x);
+            });
+
+        })(dataArray[i]);
+
+        animebutton.setAttribute("onclick", "")
+
         imgBox.appendChild(imgelem);
         imgBox.appendChild(detaildiv);
         imgBox.appendChild(animebutton);
@@ -288,6 +297,12 @@ function printer()
 
 function goToAnime(character)
 {
-    
+    localStorage.setItem("CharacterName", character.name);
+    localStorage.setItem("CharacterAge", character.age);
+    localStorage.setItem("CharacterGender", character.gender);
+    localStorage.setItem("CharacterEye", character.eye_color);
+    localStorage.setItem("CharacterHair", character.hair_color);
+    localStorage.setItem("CharacterFilms", character.films[0]);
+
     document.location.href = "animepage.html";
 }
