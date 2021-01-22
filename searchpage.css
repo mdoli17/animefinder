@@ -1,14 +1,145 @@
 body {
-    background: url(background.jpg) no-repeat center center fixed;
+    background: url(background2.jpg) no-repeat center center fixed;
     overflow-y: hidden;
     margin: 0;
+    backdrop-filter: brightness(60%);
+}
+#Wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+#HomeContainer{
+    /* position: relative; */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
+}
+#WelcomeText {
+    font-size: 66px;
+    margin-bottom: 50px;
+    font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+}
+#ClockDivision {
+    font-size: 1050%;
+    font-weight: 500;
+    letter-spacing: -5px;
+    font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+}
+#SearchContainer
+{
+    display: flex;
+    flex-direction: column;
 }
 
-#SearchContainer{
-    /* display: flex;
-    flex-direction: column;
-    height: 10px; */
-    position: absolute;
-    left: 50%
-    ;
+#SearchContainer label{
+    font-size: 46px;
+    font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
 }
+
+#SearchContainer input {
+    width: 100%;
+    padding-top: 10px;
+    display: block;
+    background: 0;
+    border: 0;
+    border-bottom: 4px solid #fff;
+    color: #fff;
+    font-size: 200%;
+    line-height: 120%;
+    font-weight: 500;
+    outline: none;
+    text-align: center;
+    transition: border-color .2s ease;
+
+}
+
+#SearchContainer input:focus {
+    text-align: center;
+    border-style: none;
+    outline: none;
+    border-bottom: 4px solid #fff;
+}
+
+
+#AttributeDivision {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.AttributeBox {
+    margin-right: 10px;
+    
+    border-bottom: 4px solid white;
+    border-left: 4px solid white;
+    border-right: 4px solid white;
+    border-radius: 100px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+
+#AttributeLabel{
+    font-size: 100%;
+    margin-left: 5%;
+    margin-right: 10%;
+    font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+}
+
+#AttributeButton {
+    margin-right: 0px;
+    background-color: transparent;
+    border-style: none;
+    color: white;
+}
+#AttributeButton:active {
+    background-color: red;
+    
+    outline: none;
+}
+#AttributeButton:focus
+{
+    outline: none;
+}
+
+#GoButtonDivision {
+    margin-top: 5%;
+    align-items: center;
+    width: 100%;
+    height: 5vh;
+}
+
+#GoButton{
+    border-style: solid;
+    border-color: white;
+    border-radius: 100%;
+    height: 100%;
+    width: 10%;
+    background-color:transparent;
+}
+
+#GoButton:focus
+{
+    outline: none;
+}
+
+/*  */
+
+#ListContainer {
+    width: 100px;
+    height: 100px;
+    top: 100px;
+}
+

@@ -2,12 +2,40 @@
     <head>
         <title>Find your character</title> 
         <link rel="stylesheet" href="searchpage.css">
+        <script src="searchpage.js"></script>
     </head>
 
     <body>
-        <div id="SearchContainer">
-            <label>Good Afternoon</label>
-            <hr>
+        <div id=Wrapper>
+            <div id="HomeContainer">
+                <div id="ClockDivision">1:13</div>
+                <div id="WelcomeText">Welcome Back</div>
+                <div id="SearchContainer">
+                    <label>Enter attributes here</label>
+                    <input id="Searchfield" type="text" id="fname" name="fname" onchange="onSearchEntered()">
+                </div>
+                <div id="AttributeDivision">
+                    <!-- <div class="AttributeBox">
+                        <label id="AttributeLabel">Eye Color</label>
+                        <button id="AttributeButton">X</button>
+                    </div>
+                    <div class="AttributeBox">
+                        <label id="AttributeLabel">Eye Color</label>
+                        <button id="AttributeButton">X</button>
+                    </div>
+                    <div class="AttributeBox">
+                        <label id="AttributeLabel">Eye Color</label>
+                        <button id="AttributeButton">X</button>
+                    </div> -->
+                </div>
+                <div id="GoButtonDivision">
+                    <button id="GoButton" onclick="dostuff()" href="ListContainer"></button>
+                </div>
+            </div>
+
+            <div id="ListContainer">
+
+            </div>
         </div>
     </body>
 </html>
