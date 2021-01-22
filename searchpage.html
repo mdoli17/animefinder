@@ -6,7 +6,7 @@
     </head>
 
     <body>
-        <div id=Wrapper>
+        <div id="Wrapper">
             <div id="HomeContainer">
                 <div id="ClockDivision">1:13</div>
                 <div id="WelcomeText">Welcome Back</div>
@@ -14,27 +14,30 @@
                     <label>Enter attributes here</label>
                     <input id="Searchfield" type="text" id="fname" name="fname" onchange="onSearchEntered()">
                 </div>
-                <div id="AttributeDivision">
-                    <!-- <div class="AttributeBox">
-                        <label id="AttributeLabel">Eye Color</label>
-                        <button id="AttributeButton">X</button>
-                    </div>
-                    <div class="AttributeBox">
-                        <label id="AttributeLabel">Eye Color</label>
-                        <button id="AttributeButton">X</button>
-                    </div>
-                    <div class="AttributeBox">
-                        <label id="AttributeLabel">Eye Color</label>
-                        <button id="AttributeButton">X</button>
-                    </div> -->
-                </div>
+                <div id="AttributeDivision"></div>
                 <div id="GoButtonDivision">
-                    <button id="GoButton" onclick="dostuff()" href="ListContainer"></button>
+                    <form action="#ListContainer">
+                        <button id="GoButton" class="GoToButton" onclick="dostuff()"></button>
+                    </form>
+                    
                 </div>
             </div>
 
             <div id="ListContainer">
-
+                <img src="background.jpg">
+                <form action="#Wrapper">
+                    <button id="GoButton" class="GoToButton" onclick="dostuff()"></button>
+                </form>
+                <div id="CharacterContainer">
+                    <!-- <img id="CharacterMainImg">
+                    <div id="CharacterInfo">
+                        <label>Character Name</label>
+                        <div id="AdditiveImgDiv">
+                            <img id="img1">
+                            <img id="img2">
+                        </div>
+                    </div>
+                </div> -->
             </div>
         </div>
     </body>

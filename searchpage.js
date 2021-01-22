@@ -195,7 +195,7 @@ async function onFindPressed()
 
 function updateUI(dataArray)
 {
-    document.getElementById("container").textContent = " ";
+    document.getElementById("CharacterContainer").textContent = " ";
     
     var count = dataArray.length;
     if(count == 0) 
@@ -206,49 +206,7 @@ function updateUI(dataArray)
     for(var i = 0; i < count; i++)
     {
         var imgBox = document.createElement("div");
-        imgBox.setAttribute("class", "box");
-
-        var detaildiv = document.createElement("div");
-        detaildiv.setAttribute("class", "characterdetails");
-
-        var detailarr = ["name", "age", "gender", "eyecolor", "haircolor"];
-        
-        for(var j = 0; j < detailarr.length; j++)
-        {
-            var detailbox = document.createElement("div");
-            detailbox.setAttribute("class", "characterdetailbox");
-            
-            var headlabel = document.createElement("label");
-            headlabel.setAttribute("class","characterdetailhead");
-            var infolabel = document.createElement("label");
-            infolabel.setAttribute("class", "characterdetailinfo")
-
-            headlabel.innerHTML = detailarr[j] + ": ";
-            switch (j) {
-                case 0:
-                    infolabel.innerHTML = dataArray[i].name;
-                    break;
-                case 1:
-                    infolabel.innerHTML = dataArray[i].age;
-                    break;
-                case 2:
-                    infolabel.innerHTML = dataArray[i].gender;
-                    break;
-                case 3:
-                    infolabel.innerHTML = dataArray[i].eye_color;
-                    break;
-                case 4: 
-                    infolabel.innerHTML = dataArray[i].hair_color;
-                    break;
-            }
-            
-
-            detailbox.appendChild(headlabel);
-            detailbox.appendChild(infolabel);
-            detaildiv.appendChild(detailbox);
-            
-        }
-        
+        imgBox.setAttribute("class", "box");        
         
         var imgelem = new Image();
         imgelem.src = characterFolder + dataArray[i].name + ".png";
@@ -256,22 +214,10 @@ function updateUI(dataArray)
         imgelem.setAttribute("class", "characterImages");
 
         
-        var animebutton = document.createElement("button");
-        animebutton.innerHTML = "Go to animepage";
-        (function(x){
-            animebutton.addEventListener('click', function() {
-                goToAnime(x);
-            });
-
-        })(dataArray[i]);
-
-        animebutton.setAttribute("onclick", "")
 
         imgBox.appendChild(imgelem);
-        imgBox.appendChild(detaildiv);
-        imgBox.appendChild(animebutton);
 
-        document.getElementById("container").appendChild(imgBox);
+        document.getElementById("CharacterContainer").appendChild(imgBox);
     }
 }
 
@@ -311,5 +257,5 @@ function goToAnime(character)
 
 function dostuff()
 {
-    alert("AE");
+    // alert("AE");
 }
