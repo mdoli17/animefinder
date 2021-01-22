@@ -74,6 +74,14 @@ body {
     background-color: thistle;
     display: flex;
     justify-content: center;
+    margin-top: 10px;
+    margin-right: 2px;
+}
+
+.attributeBox label{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 4px 8px;
+    
 }
 
 .attributeBoxXButton

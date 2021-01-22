@@ -27,13 +27,15 @@ async function constructor()
             {
                 var imgdiv = document.createElement("div");
                 imgdiv.setAttribute("class", "CharacterImageContainer");
-                
+
                 var img = new Image();
                 img.src = characterFolder + character.name + ".png";
                 img.setAttribute("class", "CharacterImage");
                 img.onclick = function()
                 {
-                    alert(character.name);
+                    console.log(character);
+                    sessionStorage.setItem("info", JSON.stringify(character));
+                    document.location.href = "character.html";
                 }
                 var middle = document.createElement("div");
                 middle.setAttribute("class", "CharacterNameDiv");
@@ -60,18 +62,9 @@ function updateDetails(value)
     document.getElementById("Release").innerHTML = value.release_date;
     document.getElementById("Score").innerHTML = value.rt_score;
     document.getElementById("Image").src = "Images/Films/" + value.title + ".png";
+    
 }
 
 
-var prevScrollpos = document.getElementById("container").scrollTop;
-function OnSroll()
-{
-    // var currentScrollPos = document.getElementById("container").scrollTop;
-    // if (prevScrollpos > currentScrollPos) {
-    //     document.getElementById("searchfield").style.top = "1%";
-    // } else {
-    //     document.getElementById("searchfield").style.top = "-50px";
-    // }
-    // prevScrollpos = currentScrollPos;
-}
+
 
