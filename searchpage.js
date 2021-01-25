@@ -25,12 +25,17 @@ let hairColors = ["Black", "Blonde", "Brown", "Grey", "White", "Light", "Orange"
 var characterAttributes;
 var enteredAttributes = [];
 
-function constructor()
-{
-    characterAttributes = new CharacterAttributes();
-}
+var CharacterIndex = 0;
+var CharacterArray = [];
 
-window.onload = constructor();
+
+window.onload = function() {
+    characterAttributes = new CharacterAttributes();
+    document.getElementById("RightPanel").addEventListener('wheel', function(event)
+    {
+        wheelTurned(event);
+    });
+}
 
 function CharacterAttributes()
 {
@@ -41,7 +46,14 @@ function CharacterAttributes()
     this.specie = null;
     this.gender = null;
 }
-
+let CharacterAttributeJSON = {
+    name: "",
+    age: "",
+    eyecolor: "",
+    haircolor: "",
+    specie: "",
+    gender: "",
+}
 
 function onSearchEntered()
 {
@@ -63,17 +75,19 @@ function parseInput(text)
             if(!enteredAttributes.includes("eyecolor"))
             {
                 enteredAttributes.push("eyecolor");
-                characterAttributes.eyecolor = capitalize(words[0]);
+                CharacterAttributeJSON.eyecolor = capitalize(words[0]);
                 addCharacterAttributeToUI("eyecolor");
+                console.log(CharacterAttributeJSON.eyecolor);
             }
         }   
         else if(words[1] == "hair")
         {
             if(!enteredAttributes.includes("haircolor"))
             {
-                characterAttributes.haircolor = capitalize(words[0]);
+                CharacterAttributeJSON.haircolor = capitalize(words[0]);
                 enteredAttributes.push("haircolor");
                 addCharacterAttributeToUI("haircolor");
+                
             }
         }
     }
@@ -83,18 +97,18 @@ function parseInput(text)
         {
             if(!enteredAttributes.includes("gender"))
             {
-                alert("adding gender");
-                characterAttributes.gender = capitalize(words[0]);
+                
+                CharacterAttributeJSON.gender = capitalize(words[0]);
                 enteredAttributes.push("gender");
                 addCharacterAttributeToUI("gender");
             }
         }
         else 
         {
-            alert("Trying to add specie");
+            
             if(!enteredAttributes.includes("specie"))
             {
-                characterAttributes.specie = capitalize(words[0]);
+                CharacterAttributeJSON.specie = capitalize(words[0]);
                 enteredAttributes.push("specie");
                 addCharacterAttributeToUI("specie");
             }
@@ -106,7 +120,8 @@ function parseInput(text)
         {
             if(!enteredAttributes.includes("age"))
             {
-                characterAttributes.age = words[0];
+                
+                CharacterAttributeJSON.age = words[0];
                 enteredAttributes.push("age");
                 addCharacterAttributeToUI("age");
             }
@@ -124,6 +139,7 @@ function parseInput(text)
 
 function addCharacterAttributeToUI(attribute)
 {
+    alert(attribute);
     var attributeDiv = document.createElement("div");
     attributeDiv.setAttribute("class", "AttributeBox");
 
@@ -137,19 +153,19 @@ function addCharacterAttributeToUI(attribute)
     xButton.addEventListener('click', function(){
         switch (attribute) {
             case "eyecolor":
-                characterAttributes.eyecolor = null;
+                CharacterAttributeJSON.eyecolor = "";
                 break;
             case "haircolor":
-                characterAttributes.haircolor = null;
+                CharacterAttributeJSON.haircolor = "";
                 break;
             case "gender":
-                characterAttributes.gender = null;
+                CharacterAttributeJSON.gender = "";
                 break;
             case "age":
-                characterAttributes.age = null;
+                CharacterAttributeJSON.age = "";
                 break;
             case "specie":
-                characterAttributes.specie = null;
+                CharacterAttributeJSON.specie = "";
                 break;
         }
         ArrayRemove(enteredAttributes, attribute);
@@ -165,39 +181,46 @@ function addCharacterAttributeToUI(attribute)
 async function onFindPressed() 
 {
     var data = await getJSONData("people");
+    console.log("AE");
     var newData = [];
-
     for (let index = 0; index < data.length; index++) {
         var element = data[index];
-        if((element.eye_color == characterAttributes.eyecolor || characterAttributes.eyecolor == null)
-        && (element.hair_color == characterAttributes.haircolor || characterAttributes.haircolor == null)
-        && (element.gender == characterAttributes.gender || characterAttributes.gender == null)
-        && (element.age == characterAttributes.age || characterAttributes.age == null)
-        && !(characterAttributes.eyecolor == null && characterAttributes.haircolor == null && characterAttributes.gender == null && characterAttributes.age == null && characterAttributes.specie == null))
+
+        if((element.eye_color == CharacterAttributeJSON.eyecolor || CharacterAttributeJSON.eyecolor == "")
+        && (element.hair_color == CharacterAttributeJSON.haircolor || CharacterAttributeJSON.haircolor == "")
+        && (element.gender == CharacterAttributeJSON.gender || CharacterAttributeJSON.gender == "")
+        && (element.age == CharacterAttributeJSON.age || CharacterAttributeJSON.age == "")
+        && !(CharacterAttributeJSON.eyecolor == "" && CharacterAttributeJSON.haircolor == "" && CharacterAttributeJSON.gender == "" && CharacterAttributeJSON.age == "" && CharacterAttributeJSON.specie == ""))
         {
-            if(characterAttributes.specie == null)
+            if(CharacterAttributeJSON.specie == "")
             {
+                console.log("AEe");
                 newData.push(element);
             }
             else 
             {
                 var page = element.species.split("/");
                 var speciedata = await getJSONData("species/" + page[page.length - 1]);
-                if(speciedata.name == characterAttributes.specie)
+                if(speciedata.name == CharacterAttributeJSON.specie)
                 {
                     newData.push(element);
+                    
                 }
             }
         }    
     }
     updateUI(newData);
+    updateCharacterPanel();
+    location.href = "#ListContainer";
 }
 
 function updateUI(dataArray)
 {
-    document.getElementById("CharacterContainer").textContent = " ";
+    console.log("AE");
     
     var count = dataArray.length;
+    CharacterArray = dataArray;
+    console.log(CharacterArray);
     if(count == 0) 
     {
         alert("No character with these attributes were found");
@@ -205,20 +228,42 @@ function updateUI(dataArray)
     }
     for(var i = 0; i < count; i++)
     {
-        var imgBox = document.createElement("div");
-        imgBox.setAttribute("class", "box");        
+        console.log(dataArray[i].name);
+        // var imgBox = document.createElement("div");
+        // imgBox.setAttribute("class", "box");        
         
-        var imgelem = new Image();
-        imgelem.src = characterFolder + dataArray[i].name + ".png";
-        imgelem.setAttribute("onerror", "this.src='testimage.png'");
-        imgelem.setAttribute("class", "characterImages");
+        // var imgelem = new Image();
+        // imgelem.src = characterFolder + dataArray[i].name + ".png";
+        // imgelem.setAttribute("onerror", "this.src='testimage.png'");
+        // imgelem.setAttribute("class", "characterImages");
 
         
 
-        imgBox.appendChild(imgelem);
+        // imgBox.appendChild(imgelem);
 
-        document.getElementById("CharacterContainer").appendChild(imgBox);
+        // document.getElementById("CharacterContainer").appendChild(imgBox);
     }
+}
+
+function updateCharacterPanel() {
+    var elems = document.getElementById("RightPanel").children;
+    for(let i = 0; i < elems.length; i++)
+    {
+        elems[i].children[0].innerHTML = CharacterArray[(i + CharacterIndex) % CharacterArray.length].name;
+    }
+}
+function wheelTurned(event) {
+    if(event.deltaY < 0)
+    {
+        CharacterIndex -= 1;
+        if (CharacterIndex < 0) CharacterIndex = CharacterArray.length - 1;
+
+    }else if (event.deltaY > 0)
+    {
+        CharacterIndex = (CharacterIndex +  1) % CharacterArray.length;
+    }
+    console.log(CharacterIndex);
+    updateCharacterPanel();
 }
 
 
@@ -257,5 +302,5 @@ function goToAnime(character)
 
 function dostuff()
 {
-    // alert("AE");
+    location.href = "#Wrapper";
 }

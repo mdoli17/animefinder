@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
     <head>
         <title>Find your character</title> 
         <link rel="stylesheet" href="searchpage.css">
@@ -16,9 +16,9 @@
                 </div>
                 <div id="AttributeDivision"></div>
                 <div id="GoButtonDivision">
-                    <form action="#ListContainer">
-                        <button id="GoButton" class="GoToButton" onclick="dostuff()"></button>
-                    </form>
+                    
+                    <button id="GoToListButton" class="GoToButton" onclick="onFindPressed()"> A </button>
+                    
                     
                 </div>
             </div>
@@ -27,17 +27,16 @@
         <div id="ListContainer">
             <img src="background.jpg" id="ListBackgroundImage">
             
-            <form action="#Wrapper">
-                <button id="GoButton" class="GoToButton" onclick="dostuff()"></button>
-            </form>
+            <div id="GoToSearchDivision">
+                <button id="GoToSearchButton" class="GoToButton" onclick="dostuff()"> A </button>
+            </div>
             
             <div id="RightPanel">
-                <div id="LabelDivision" class="LabelDivision"> <label> Test </label>  </div>
-                <div id="LabelDivision" class="LabelDivision"> <label> Test </label>  </div>
-                <div id="LabelDivision" class="LabelDivision"> <label> Test </label>  </div>
-                <div id="LabelDivision" class="LabelDivision"> <label> Test </label>  </div>
-                <div id="LabelDivision" class="LabelDivision"> <label> Test </label>  </div>
-                
+                <div  class="LabelDivision"> <label> Test 01 </label>  </div>
+                <div  class="LabelDivision"> <label> Test 02 </label>  </div>
+                <div  class="LabelDivision"> <label> Test 03 </label>  </div>
+                <div  class="LabelDivision"> <label> Test 04 </label>  </div>
+                <div  class="LabelDivision"> <label> Test 05 </label>  </div>
             </div>
         </div>
     </body>
