@@ -22,7 +22,6 @@ const characterFolder = "Images/Characters/";
 let eyeColors = ["Black", "Blue", "Brown", "Grey", "Green", "Hazel", "Red", "White", "Yellow", "Emerald"];
 let hairColors = ["Black", "Blonde", "Brown", "Grey", "White", "Light", "Orange", "Beige"];
 
-var characterAttributes;
 var enteredAttributes = [];
 
 var CharacterIndex = 0;
@@ -30,22 +29,20 @@ var CharacterArray = [];
 
 
 window.onload = function() {
-    characterAttributes = new CharacterAttributes();
     document.getElementById("RightPanel").addEventListener('wheel', function(event)
     {
         wheelTurned(event);
     });
+    var elements = document.getElementsByClassName("LabelDivision");
+    for(let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('mouseenter', function(event)
+        {
+            updateImage(elements[i].children[0].innerHTML);
+        });
+    };
 }
 
-function CharacterAttributes()
-{
-    this.name = null;
-    this.age = null;
-    this.eyecolor = null;
-    this.haircolor = null;
-    this.specie = null;
-    this.gender = null;
-}
+
 let CharacterAttributeJSON = {
     name: "",
     age: "",
@@ -65,7 +62,7 @@ function onSearchEntered()
 function parseInput(text) 
 {
     var words = text.toLowerCase().split(" ");
-    console.log(words);
+    
 
     // Eyes or Hair color
     if(words.length == 2)
@@ -77,7 +74,7 @@ function parseInput(text)
                 enteredAttributes.push("eyecolor");
                 CharacterAttributeJSON.eyecolor = capitalize(words[0]);
                 addCharacterAttributeToUI("eyecolor");
-                console.log(CharacterAttributeJSON.eyecolor);
+                
             }
         }   
         else if(words[1] == "hair")
@@ -139,7 +136,7 @@ function parseInput(text)
 
 function addCharacterAttributeToUI(attribute)
 {
-    alert(attribute);
+    
     var attributeDiv = document.createElement("div");
     attributeDiv.setAttribute("class", "AttributeBox");
 
@@ -181,7 +178,7 @@ function addCharacterAttributeToUI(attribute)
 async function onFindPressed() 
 {
     var data = await getJSONData("people");
-    console.log("AE");
+    
     var newData = [];
     for (let index = 0; index < data.length; index++) {
         var element = data[index];
@@ -194,7 +191,7 @@ async function onFindPressed()
         {
             if(CharacterAttributeJSON.specie == "")
             {
-                console.log("AEe");
+                
                 newData.push(element);
             }
             else 
@@ -209,41 +206,18 @@ async function onFindPressed()
             }
         }    
     }
-    updateUI(newData);
+    
+    CharacterArray = newData;
+    if(CharacterArray.length == 0)
+    {
+        alert("No Characters Found");
+        return;
+    }
     updateCharacterPanel();
     location.href = "#ListContainer";
 }
 
-function updateUI(dataArray)
-{
-    console.log("AE");
-    
-    var count = dataArray.length;
-    CharacterArray = dataArray;
-    console.log(CharacterArray);
-    if(count == 0) 
-    {
-        alert("No character with these attributes were found");
-        return;
-    }
-    for(var i = 0; i < count; i++)
-    {
-        console.log(dataArray[i].name);
-        // var imgBox = document.createElement("div");
-        // imgBox.setAttribute("class", "box");        
-        
-        // var imgelem = new Image();
-        // imgelem.src = characterFolder + dataArray[i].name + ".png";
-        // imgelem.setAttribute("onerror", "this.src='testimage.png'");
-        // imgelem.setAttribute("class", "characterImages");
 
-        
-
-        // imgBox.appendChild(imgelem);
-
-        // document.getElementById("CharacterContainer").appendChild(imgBox);
-    }
-}
 
 function updateCharacterPanel() {
     var elems = document.getElementById("RightPanel").children;
@@ -274,20 +248,6 @@ async function getJSONData(str)
     return data;
 }
 
-
-
-var prevScrollpos = document.getElementById("container").scrollTop;
-function printer()
-{
-    var currentScrollPos = document.getElementById("container").scrollTop;
-    if (prevScrollpos > currentScrollPos) {
-        document.getElementById("searchfield").style.top = "1%";
-    } else {
-        document.getElementById("searchfield").style.top = "-50px";
-    }
-    prevScrollpos = currentScrollPos;
-}
-
 function goToAnime(character)
 {
     localStorage.setItem("CharacterName", character.name);
@@ -300,7 +260,13 @@ function goToAnime(character)
     document.location.href = "animepage.html";
 }
 
-function dostuff()
+function onGoToSearchPressed()
 {
     location.href = "#Wrapper";
+    CharacterIndex = 0;
+}
+
+function updateImage(name)
+{
+    document.getElementById("ListBackgroundImage").src = characterFolder + name + ".png";
 }
