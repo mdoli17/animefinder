@@ -35,6 +35,11 @@ window.onload = function() {
     });
     var elements = document.getElementsByClassName("LabelDivision");
     for(let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', function(event){
+            let character = CharacterArray[i + CharacterIndex];
+            localStorage.setItem("CharacterFilms", character.films[0]);
+            document.location.href = "animepage.html";
+        });
         elements[i].addEventListener('mouseenter', function(event)
         {
             updateImage(elements[i].children[0].innerHTML);
