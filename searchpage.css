@@ -91,10 +91,22 @@ body {
     flex-direction: column;
 }
 
-#SearchContainer label{
+#EnterHere{
     font-size: 3vw;
     font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
+}
+
+@keyframes fadeIn { 
+    from {
+        opacity: 0;
+    }
+}
+#Example {
+    font-size: 1vw;
+    font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+    animation: fadeIn 2s infinite alternate;
 }
 
 #SearchContainer input {
@@ -125,8 +137,8 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 10%;
-    height: 2vh;
+    margin-top: 5%;
+    height: 3vh;
 }
 
 .AttributeBox {

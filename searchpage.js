@@ -1,4 +1,6 @@
-
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 function capitalize(str)
 {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -39,7 +41,7 @@ async function getJSONData(str)
 
 let eyeColors = ["Black", "Blue", "Brown", "Grey", "Green", "Hazel", "Red", "White", "Yellow", "Emerald"];
 let hairColors = ["Black", "Blonde", "Brown", "Grey", "White", "Light", "Orange", "Beige"];
-
+let ExampleText = ["Green Eyes", "Grey Hair", "13 years old", "female", "cat"];
 var enteredAttributes = [];
 
 var CharacterIndex = 0;
@@ -48,13 +50,15 @@ var CharacterArray = [];
 
 
 window.onload = function() {
-    document.getElementById("RightPanel").addEventListener('wheel', function(event)
+    document.getElementById("ListContainer").addEventListener('wheel', function(event)
     {
         wheelTurned(event);
     });
 
     updateTime();
     updateWeather();
+    setTimeout(StartExample, 4000);
+
 }
 
 
@@ -355,7 +359,9 @@ function updateTime()
     {
         text = "Good morning";
     }
-
+    else {
+        text = "Good Evening";
+    }
     var time = h + ":" + m;
     document.getElementById("WelcomeText").innerHTML = text;
     document.getElementById("ClockDivision").innerHTML = time;
@@ -382,4 +388,11 @@ function tester(position)
     });
 
     setTimeout(updateTime, 60000);
+}
+
+function StartExample()
+{  
+    let curExample = ExampleText[getRandomInt(ExampleText.length)];
+    document.getElementById("Example").innerHTML = "Something Like: " + curExample;
+    setTimeout(StartExample, 4000);
 }
