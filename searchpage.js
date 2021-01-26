@@ -237,7 +237,8 @@ async function onFindPressed()
         container.appendChild(division);
     }
     updateCharacterPanel();
-    location.href = "#ListContainer";
+    
+    document.getElementById("Wrapper").style.transform = "translate(0, -100%)";
 }
 
 
@@ -260,7 +261,7 @@ function wheelTurned(event) {
     {
         CharacterIndex = (CharacterIndex +  1) % CharacterArray.length;
     }
-    console.log(CharacterArray[SelectedIndex].name);
+    
     updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
     updateCharacterPanel();
 }
@@ -287,7 +288,9 @@ function goToAnime(character)
 
 function onGoToSearchPressed()
 {
-    location.href = "#Wrapper";
+    // location.href = "#Wrapper";
+    document.getElementById("Wrapper").style.transform = "translate(0, 0%)";
+    
     CharacterIndex = 0;
 }
 

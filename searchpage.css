@@ -1,23 +1,40 @@
 body {
-    background: url(background2.jpg) no-repeat center center fixed;
-    overflow-y: hidden;
+    
+   
     margin: 0;
+    
     backdrop-filter: brightness(60%);
-    display: flex;
-    flex-direction: column;
+
 }
 
 html 
 {
-    scroll-behavior: smooth;
-    
+    scroll-behavior: smooth;    
+}
+#Header {
+    z-index: 3;
+    background-color: gray;
+    width: 100%;
+    height: 20%;
+    position: fixed;
+}
+#MainContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
 #Wrapper {
+    background: url(background2.jpg) no-repeat center center fixed;
+    top: 0;
+    left: 0;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    position: relative;
+    width: 100vw;
+    position: absolute;
+    z-index: 1;
+    transition: transform 0.5s;
 }
 
 #HomeContainer{
@@ -28,19 +45,19 @@ html
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: 30%;
-    height: 50%;
+    width: 30vw;
+    height: 50vh;
 }
 
 #WelcomeText {
-    font-size: 66px;
+    font-size: 3vw;
     margin-bottom: 50px;
     font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
 }
 
 #ClockDivision {
-    font-size: 1050%;
+    font-size: 10vw;
     font-weight: 500;
     letter-spacing: -5px;
     font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -54,7 +71,7 @@ html
 }
 
 #SearchContainer label{
-    font-size: 46px;
+    font-size: 3vw;
     font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
 }
@@ -88,6 +105,7 @@ html
     flex-direction: row;
     justify-content: center;
     margin-top: 10%;
+    height: 2vh;
 }
 
 .AttributeBox {
@@ -100,6 +118,7 @@ html
     flex-direction: row;
     /* width: 100%; */
     align-items: center;
+    
 }
 
 #AttributeLabel{
@@ -126,7 +145,7 @@ html
 }
 
 #GoButtonDivision {
-    margin-top: 5%;
+    margin-top: 2%;
     align-items: center;
     width: 100%;
     height: 5vh;
@@ -152,11 +171,14 @@ html
 /*  */
 
 #ListContainer {
-    position: relative;
+    position: absolute;
     height: 100vh;
     width: 100vw;
-    margin-top: 100vh;
+    /* margin-top: 100vh; */
     display: inline;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
 
@@ -216,4 +238,16 @@ html
     white-space: nowrap;
     text-align: left;
     
+}
+
+
+
+
+
+#test {
+    background-color: gray;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 20vh;
 }
