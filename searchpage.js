@@ -52,6 +52,7 @@ window.onload = function() {
     {
         wheelTurned(event);
     });
+
     updateTime();
     updateWeather();
 }
@@ -228,7 +229,7 @@ async function onFindPressed()
         return;
     }
     
-    let numOfBoxesForCharacters = (CharacterArray.length <= 5) ? CharacterArray.length : 5;
+    let numOfBoxesForCharacters = CharacterArray.length;
     var container = document.getElementById("RightPanel");
     container.innerHTML = "";
     for(let i = 0; i < numOfBoxesForCharacters; i++)
@@ -249,7 +250,7 @@ async function onFindPressed()
         division.addEventListener('mouseenter', function(event)
         {
             SelectedIndex = i;
-            updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
+            // updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
         });
 
         container.appendChild(division);
@@ -268,20 +269,42 @@ function updateCharacterPanel() {
         elems[i].children[0].innerHTML = CharacterArray[(i + CharacterIndex) % CharacterArray.length].name;
     }
 }
+
+var ammount = 0;
 function wheelTurned(event) {
-    if(CharacterArray.length < 5) return;
+    // if(CharacterArray.length < 5) return;
+    
     if(event.deltaY < 0)
     {
-        CharacterIndex -= 1;
-        if (CharacterIndex < 0) CharacterIndex = CharacterArray.length - 1;
-
+        if(CharacterIndex != 0)
+        {
+            ammount += 100;
+            CharacterIndex--;
+        }
     }else if (event.deltaY > 0)
     {
-        CharacterIndex = (CharacterIndex +  1) % CharacterArray.length;
+        if(CharacterIndex != CharacterArray.length - 1)
+        {
+            ammount -= 100;
+            CharacterIndex++;
+        }
     }
-    
-    updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
-    updateCharacterPanel();
+    let elements = document.getElementsByClassName("LabelDivision");
+    for(let i = 0; i < elements.length; i++)
+    {
+        if(i != CharacterIndex) {
+            elements[i].style.transform = "translate(0, " + ammount + "%)";
+            elements[i].children[0].style.opacity = "0.3"; 
+        } else {
+            elements[i].style.transform = "translate(-5vw, " + ammount + "%)";
+            elements[i].children[0].style.opacity = "1"; 
+        }
+    }
+            console.log(CharacterIndex);    
+
+
+    // updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
+    // updateCharacterPanel();
 }
 
 
@@ -322,7 +345,6 @@ function updateTime()
         m = "0" + m;
     }
     var text = "";
-    console.log(h);
     if(h >= 12 && h < 18)
     {
         text = "Good afternoon";

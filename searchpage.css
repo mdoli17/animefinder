@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    
 }
 
 
@@ -19,7 +20,6 @@ body {
     top: 0;
     margin-top: 5%;
     margin-bottom: 0%;
-    
     right: 10%;
 }
 
@@ -36,10 +36,11 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 #Wrapper {
-    /* background: url(background2.jpg) no-repeat center center fixed; */
     top: 0;
     left: 0;
     display: flex;
@@ -177,7 +178,6 @@ body {
 
 .GoToButton
 {
-    
     border-style: solid;
     border-color: white;
     border-radius: 100%;
@@ -208,10 +208,11 @@ body {
 
 #ListBackgroundImage {
     position: absolute;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     filter: brightness(0.5);
+    z-index: 0;
 }
 
 #ListContainer #GoToSearchDivision {
@@ -227,53 +228,35 @@ body {
 
 #RightPanel {
     position: absolute;
-    top: 0vh;
-    height: 100vh;
-    width: 30%;
-    /* background-color: red; */
+    top: 40%;
     right: 0;
+    height: 60vh;
+    width: 30%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+
 }
 
 .LabelDivision {
-    width: 100%;
-    height: 5vh;
-    /* background-color: blue; */
     position: relative;
-    text-align: right;
-    right: 20%;
+    width: 100%;
+    height: 30%;
+    transition: transform .5s;
+    flex-shrink: 0;
 }
 
 .LabelDivision:hover label{
-    font-size: 40px;
-    transition: .1s;
+    transition:  .5s;
 }
 
 .LabelDivision label {
-    transition: .1s;
+    position: absolute;
+    left: 20%;
+    top: 50%;
+    transform: translate(0, -50%);
     font-size: 30px;
-    /* position: absolute; */
-    /* left: 50%; */
-    /* top: 50%; */
-    transform: translate(-50%, -50%);
-    /* background-color: green; */
     font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: rgb(214, 214, 214);
-    white-space: nowrap;
-    text-align: left;
-    
-}
-
-
-
-
-
-#test {
-    background-color: gray;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 20vh;
+    color: white;
+    transition: .5s;
+    opacity: 0.3;
 }
