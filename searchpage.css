@@ -28,7 +28,8 @@ html
     display: flex;
     flex-direction: column;
     text-align: center;
-    
+    width: 30%;
+    height: 50%;
 }
 
 #WelcomeText {
@@ -165,7 +166,6 @@ html
     height: 100vh;
     z-index: 0;
     filter: brightness(0.5);
-    transition: 0.1s;
 }
 
 #ListContainer #GoToSearchDivision {
