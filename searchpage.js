@@ -17,7 +17,25 @@ function isNumber(str)
 }
 
 const HomeURL = "https://ghibliapi.herokuapp.com/";
+const WeatherURL = "https://api.openweathermap.org/data/2.5/weather?"
 const characterFolder = "Images/Characters/";
+
+async function getWeatherJSON(lat, lot)
+{
+    const response = await fetch(WeatherURL + "lat=" + lat + "&lon=" + lot +"&units=metric&appid=893f82ff52c071646ba64d7afeffa50b");
+    const data = await response.json();
+    return data;
+}
+
+async function getJSONData(str)
+{
+    const response = await fetch(HomeURL + str, {mode: "cors"});
+    const data = await response.json();
+    return data;
+}
+
+
+
 
 let eyeColors = ["Black", "Blue", "Brown", "Grey", "Green", "Hazel", "Red", "White", "Yellow", "Emerald"];
 let hairColors = ["Black", "Blonde", "Brown", "Grey", "White", "Light", "Orange", "Beige"];
@@ -32,10 +50,10 @@ var CharacterArray = [];
 window.onload = function() {
     document.getElementById("RightPanel").addEventListener('wheel', function(event)
     {
-
         wheelTurned(event);
     });
     updateTime();
+    updateWeather();
 }
 
 
@@ -267,12 +285,7 @@ function wheelTurned(event) {
 }
 
 
-async function getJSONData(str)
-{
-    const response = await fetch(HomeURL + str, {mode: "cors"});
-    const data = await response.json();
-    return data;
-}
+
 
 function goToAnime(character)
 {
@@ -304,12 +317,16 @@ function updateTime()
     var date = new Date();
     var h = date.getHours(); // 0 - 23
     var m = date.getMinutes(); // 0 - 59
-    
+    if (m >= 0 && m <= 9)
+    {
+        m = "0" + m;
+    }
     var text = "";
+    console.log(h);
     if(h >= 12 && h < 18)
     {
         text = "Good afternoon";
-    } else if (h >= 18 && h > 0 && h < 6)
+    } else if (h >= 18 && h <= 23)
     {
         text = "Good evening";
     } else if(h >= 6 && h < 12)
@@ -322,4 +339,25 @@ function updateTime()
     document.getElementById("ClockDivision").innerHTML = time;
 
     setTimeout(updateTime, 1000);
+}
+
+function updateWeather(){
+    let currentLocation = navigator.geolocation;
+    if (currentLocation) {
+        currentLocation.getCurrentPosition(tester);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function tester(position)
+{
+    console.log(position.coords);
+    let weatherData = getWeatherJSON(position.coords.latitude, position.coords.longitude);
+    weatherData.then((value) =>{
+        document.getElementById("WeatherTemperature").innerHTML = value.main.temp + "°";
+        document.getElementById("WeatherLocation").innerHTML = value.name;
+    });
+
+    setTimeout(updateTime, 60000);
 }
