@@ -35,15 +35,7 @@ window.onload = function() {
     });
     var elements = document.getElementsByClassName("LabelDivision");
     for(let i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('click', function(event){
-            let character = CharacterArray[i + CharacterIndex];
-            localStorage.setItem("CharacterFilms", character.films[0]);
-            document.location.href = "animepage.html";
-        });
-        elements[i].addEventListener('mouseenter', function(event)
-        {
-            updateImage(elements[i].children[0].innerHTML);
-        });
+
     };
 }
 
@@ -218,6 +210,32 @@ async function onFindPressed()
         alert("No Characters Found");
         return;
     }
+    
+    let numOfBoxesForCharacters = (CharacterArray.length <= 5) ? CharacterArray.length : 5;
+    var container = document.getElementById("RightPanel");
+    container.innerHTML = "";
+    for(let i = 0; i < numOfBoxesForCharacters; i++)
+    {
+        var division = document.createElement("div");
+        division.setAttribute("class", "LabelDivision");
+
+        var label = document.createElement("label");
+        division.appendChild(label);
+     
+
+        division.addEventListener('click', function(event){
+            let character = CharacterArray[i + CharacterIndex];
+            localStorage.setItem("CharacterFilms", character.films[0]);
+            document.location.href = "animepage.html";
+
+        });
+        division.addEventListener('mouseenter', function(event)
+        {
+            updateImage(CharacterArray[i + CharacterIndex].name);
+        });
+
+        container.appendChild(division);
+    }
     updateCharacterPanel();
     location.href = "#ListContainer";
 }
@@ -232,6 +250,7 @@ function updateCharacterPanel() {
     }
 }
 function wheelTurned(event) {
+    if(CharacterArray.length < 5) return;
     if(event.deltaY < 0)
     {
         CharacterIndex -= 1;
