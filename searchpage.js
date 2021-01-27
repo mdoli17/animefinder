@@ -58,7 +58,6 @@ window.onload = function() {
     updateTime();
     updateWeather();
     setTimeout(StartExample, 4000);
-
 }
 
 
@@ -272,6 +271,14 @@ function updateCharacterPanel() {
     {
         elems[i].children[0].innerHTML = CharacterArray[(i + CharacterIndex) % CharacterArray.length].name;
     }
+    setTimeout(animateFirst,700);
+}
+
+function animateFirst()
+{
+    let element = document.getElementsByClassName("LabelDivision")[CharacterIndex];
+    element.style.transform = "translate(-5vw, " + ammount + "%)";
+    element.children[0].style.opacity = "1"; 
 }
 
 var ammount = 0;
@@ -304,8 +311,6 @@ function wheelTurned(event) {
             elements[i].children[0].style.opacity = "1"; 
         }
     }
-            console.log(CharacterIndex);    
-
 
     // updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
     // updateCharacterPanel();
