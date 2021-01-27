@@ -54,11 +54,14 @@ window.onload = function() {
     {
         wheelTurned(event);
     });
-
+    
     updateTime();
     updateWeather();
     setTimeout(StartExample, 4000);
 }
+
+document.onkeydown = checkKey;
+
 
 
 let CharacterAttributeJSON = {
@@ -194,7 +197,8 @@ function addCharacterAttributeToUI(attribute)
 }
 
 async function onFindPressed() 
-{
+{       
+    ResetRightPanel();
     var data = await getJSONData("people");
     
     var newData = [];
@@ -316,8 +320,40 @@ function wheelTurned(event) {
     // updateCharacterPanel();
 }
 
+function checkKey(e) {
+    e = e || window.event;
 
+    if (e.keyCode == '38') {
+        if(CharacterIndex != 0)
+        {
+            ammount += 100;
+            CharacterIndex--;
+        }
+    }
+    else if (e.keyCode == '40') {
+        if(CharacterIndex != CharacterArray.length - 1)
+        {
+            ammount -= 100;
+            CharacterIndex++;
+        }
+    }
+    let elements = document.getElementsByClassName("LabelDivision");
+    for(let i = 0; i < elements.length; i++)
+    {
+        if(i != CharacterIndex) {
+            elements[i].style.transform = "translate(0, " + ammount + "%)";
+            elements[i].children[0].style.opacity = "0.3"; 
+        } else {
+            elements[i].style.transform = "translate(-5vw, " + ammount + "%)";
+            elements[i].children[0].style.opacity = "1"; 
+        }
+    }
+}
 
+function ResetRightPanel() {
+    ammount = 0;
+    CharacterIndex = 0;
+}
 
 function goToAnime(character)
 {
@@ -335,8 +371,6 @@ function onGoToSearchPressed()
 {
     // location.href = "#Wrapper";
     document.getElementById("Wrapper").style.transform = "translate(0, 0%)";
-    
-    CharacterIndex = 0;
 }
 
 function updateImage(name)
