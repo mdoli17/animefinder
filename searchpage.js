@@ -304,17 +304,7 @@ function wheelTurned(event) {
             CharacterIndex++;
         }
     }
-    let elements = document.getElementsByClassName("LabelDivision");
-    for(let i = 0; i < elements.length; i++)
-    {
-        if(i != CharacterIndex) {
-            elements[i].style.transform = "translate(0, " + ammount + "%)";
-            elements[i].children[0].style.opacity = "0.3"; 
-        } else {
-            elements[i].style.transform = "translate(-5vw, " + ammount + "%)";
-            elements[i].children[0].style.opacity = "1"; 
-        }
-    }
+    updateRightPanelPositions();
 
     // updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
     // updateCharacterPanel();
@@ -337,6 +327,10 @@ function checkKey(e) {
             CharacterIndex++;
         }
     }
+    updateRightPanelPositions();
+}
+
+function updateRightPanelPositions() {
     let elements = document.getElementsByClassName("LabelDivision");
     for(let i = 0; i < elements.length; i++)
     {
@@ -348,6 +342,7 @@ function checkKey(e) {
             elements[i].children[0].style.opacity = "1"; 
         }
     }
+    
 }
 
 function ResetRightPanel() {

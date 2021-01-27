@@ -286,6 +286,7 @@ body {
     left: 30%;
     top: 30%;
     background-color: red;
+
 }
 .unselectable {
     -webkit-touch-callout: none;
