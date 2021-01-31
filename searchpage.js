@@ -114,8 +114,7 @@ function parseInput(text)
         if(words[0] == "male" || words[0] == "female")
         {
             if(!enteredAttributes.includes("gender"))
-            {
-                
+            {   
                 CharacterAttributeJSON.gender = capitalize(words[0]);
                 enteredAttributes.push("gender");
                 addCharacterAttributeToUI("gender");
@@ -286,9 +285,7 @@ function animateFirst()
 }
 
 var ammount = 0;
-function wheelTurned(event) {
-    // if(CharacterArray.length < 5) return;
-    
+function wheelTurned(event) { 
     if(event.deltaY < 0)
     {
         if(CharacterIndex != 0)
@@ -306,7 +303,7 @@ function wheelTurned(event) {
     }
     updateRightPanelPositions();
 
-    // updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
+    updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
     // updateCharacterPanel();
 }
 
@@ -364,13 +361,17 @@ function goToAnime(character)
 
 function onGoToSearchPressed()
 {
-    // location.href = "#Wrapper";
     document.getElementById("Wrapper").style.transform = "translate(0, 0%)";
 }
 
-function updateImage(name)
+function updateImage()
 {
-    document.getElementById("ListBackgroundImage").src = characterFolder + name + ".png";
+    let element1 = document.getElementById("ProfilePanelContainer").children[CharacterIndex % 2];
+    element1.style.opacity = "1";
+    let name = characterFolder + CharacterArray[CharacterIndex].name + ".png";
+    element1.children[0].setAttribute("src", name);
+    let element2 = document.getElementById("ProfilePanelContainer").children[(CharacterIndex + 1) % 2];
+    element2.style.opacity = "0";
 }
 
 function updateTime()
