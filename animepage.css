@@ -38,3 +38,39 @@ header {
     background-color: white;
     z-index: 1;
 }
+
+#DiscriptionContainer {
+    width: 80%;
+    height: 80%;
+    min-width: 40vh;
+    background-color: blue;
+    
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#DiscriptionImage {
+    flex-shrink: 0;
+    /* background-color: red; */
+    background-image: url("background.jpg");
+    /* display: inherit; */
+    width: 100%;
+    overflow: hidden;
+    height: 0;
+    padding-top: 56.25%;
+    
+    
+}
+
+#DiscriptionText {
+    flex-shrink: 0;
+    background-color: green;
+    /* display: inherit; */
+    /* min-width: ; */
+    width: 40%;
+    height: 80%; 
+    margin-right: 10%;
+}
