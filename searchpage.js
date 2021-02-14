@@ -45,11 +45,12 @@ let ExampleText = ["Green Eyes", "Grey Hair", "13 years old", "female", "cat"];
 var enteredAttributes = [];
 
 var CharacterIndex = 0;
-var SelectedIndex = -1;
+var SelectedIndex = 0;
 var CharacterArray = [];
 
 
 window.onload = function() {
+    console.log(SelectedIndex)
     document.getElementById("ListContainer").addEventListener('wheel', function(event)
     {
         wheelTurned(event);
@@ -248,7 +249,8 @@ async function onFindPressed()
      
 
         division.addEventListener('click', function(event){
-            let character = CharacterArray[i + CharacterIndex];
+            console.log("SelectedIndex:" + SelectedIndex)
+            let character = CharacterArray[SelectedIndex];
             localStorage.setItem("CharacterFilms", character.films[0]);
             document.location.href = "animepage.html";
 
@@ -301,12 +303,35 @@ function wheelTurned(event) {
             CharacterIndex++;
         }
     }
+    console.log(CharacterIndex)
+    console.log(SelectedIndex)
     updateRightPanelPositions();
 
     updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
     // updateCharacterPanel();
 }
 
+function CarouselButtonUp() {
+    if(CharacterIndex != 0)
+        {
+            ammount += 100;
+            CharacterIndex--;
+        }
+        updateRightPanelPositions();
+
+    updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
+}
+
+function CarouselButtonDown() {
+    if(CharacterIndex != CharacterArray.length - 1)
+        {
+            ammount -= 100;
+            CharacterIndex++;
+        }
+        updateRightPanelPositions();
+
+    updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
+}
 function checkKey(e) {
     e = e || window.event;
 

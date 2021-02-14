@@ -1,6 +1,9 @@
 <html lang="en">
+    
     <head>
         <title>Find your character</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
         <link rel="stylesheet" href="searchpage.css">
         <script src="searchpage.js"></script>
     </head>
@@ -27,17 +30,20 @@
                 </div>
     
             </div>
-            <div id="ListContainer">
-                <img src="background.jpg" id="ListBackgroundImage">
+            <div id="ListContainer" class="unselectable">
+                <img src="background.jpg" id="ListBackgroundImage" class="unselectable">
                 
-                <div id="GoToSearchDivision">
+                <div id="GoToSearchDivision" class="unselectable">
                     <button id="GoToSearchButton" class="GoToButton" onclick="onGoToSearchPressed()"></button>
                 </div>
-                
-                <div id="RightPanel"></div>
-                <div id="ProfilePanelContainer">
-                    <div class="ProfilePanel" style="z-index: 1; background-color: green;"><img class="CharacterImage"></div>
-                    <div class="ProfilePanel" style="z-index: 2; background-color: yellow;"><img class="CharacterImage"></div>
+                <div id="LeftPanel" class="unselectable">
+                    <button id="UpButton" onclick="CarouselButtonUp()" class="unselectable"></button>
+                    <button id="DownButton" onclick="CarouselButtonDown()" class="unselectable"></button>
+                </div>
+                <div id="RightPanel" class="unselectable"></div>
+                <div id="ProfilePanelContainer" class="unselectable">
+                    <div class="ProfilePanel" style="z-index: 1; background-color: green;"><img class="CharacterImage" class="unselectable"></div>
+                    <div class="ProfilePanel" style="z-index: 2; background-color: yellow;"><img class="CharacterImage" class="unselectable"></div>
                 </div>
             </div>
         </div>

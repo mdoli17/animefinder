@@ -66,9 +66,14 @@ body {
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
+    /* justify-content: center; */
     text-align: center;
-    width: 40vw;
-    height: 50vh;
+    align-items: center;
+    width: auto;
+    height: auto;
+    
+    /* width: 70vw; */
+    /* height: 50vh; */
 }
 
 #WelcomeText {
@@ -81,7 +86,7 @@ body {
 #ClockDivision {
     font-size: 10vw;
     font-weight: 500;
-    letter-spacing: -5px;
+    letter-spacing: 1px;
     font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
 }
@@ -118,7 +123,7 @@ body {
     border: 0;
     border-bottom: 4px solid #fff;
     color: #fff;
-    font-size: 200%;
+    font-size: 3vh;
     line-height: 120%;
     font-weight: 500;
     outline: none;
@@ -137,37 +142,42 @@ body {
 #AttributeDivision {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
     margin-top: 5%;
     height: 3vh;
+    width: 15vw;
 }
 
 .AttributeBox {
-    margin-right: 10px;
-    border-bottom: 4px solid white;
-    border-left: 4px solid white;
-    border-right: 4px solid white;
+    /* margin-right: 10px; */
+    border-bottom: 0.1vw solid white;
+    border-left: 0.1vw solid white;
+    border-right: 0.1vw solid white;
     border-radius: 100px;
     display: flex;
     flex-direction: row;
     /* width: 100%; */
     align-items: center;
-    
+    /* text-align: center; */
+    width: 10vw;
 }
 
 #AttributeLabel{
-    font-size: 100%;
-    margin-left: 5%;
-    margin-right: 10%;
+    font-size: 1vw;
+    margin: auto;
+    /* margin-left: 5%; */
+    /* margin-right: 10%; */
     font-family: -apple-system, BlinkMacSystemFont, "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: white;
 }
 
 #AttributeButton {
-    margin-right: 20px;
+    /* margin-right: 20px; */
     background-color: transparent;
     border-style: none;
     color: white;
+    font-size: 1vw;
 }
 #AttributeButton:active {
     background-color: red;
@@ -182,10 +192,10 @@ body {
     position: relative;
     margin-top: 2%;
     align-items: center;
-    width: 60px;
-    height: 60px;
-    left: 50%;
-    transform: translate(-50%, 0);
+    width: 5vh;
+    height: 5vh;
+    /* left: 50%; */
+    /* transform: translate(-50%, 0); */
 }
 
 
@@ -297,9 +307,10 @@ body {
 }
 
 .CharacterImage {
-    position: relative;
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    filter: brightness(0.8);
 }
 .unselectable {
     -webkit-touch-callout: none;
@@ -309,3 +320,33 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
+#LeftPanel {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 20vw;
+    height: 50vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#UpButton {
+    height: 10vh;
+    border-style: solid;
+    border-color: white;
+
+    background-color:transparent;
+}
+#DownButton {
+    height: 10vh;
+    border-style: solid;
+    border-color: white;
+
+    background-color:transparent;
+}
+
+
+
