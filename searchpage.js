@@ -50,7 +50,7 @@ var CharacterArray = [];
 
 
 window.onload = function() {
-    console.log(SelectedIndex)
+
     document.getElementById("ListContainer").addEventListener('wheel', function(event)
     {
         wheelTurned(event);
@@ -249,7 +249,7 @@ async function onFindPressed()
      
 
         division.addEventListener('click', function(event){
-            console.log("SelectedIndex:" + SelectedIndex)
+            
             let character = CharacterArray[SelectedIndex];
             localStorage.setItem("CharacterFilms", character.films[0]);
             document.location.href = "animepage.html";
@@ -303,8 +303,6 @@ function wheelTurned(event) {
             CharacterIndex++;
         }
     }
-    console.log(CharacterIndex)
-    console.log(SelectedIndex)
     updateRightPanelPositions();
 
     updateImage(CharacterArray[(SelectedIndex + CharacterIndex) % CharacterArray.length].name);
@@ -440,7 +438,6 @@ function updateWeather(){
 
 function tester(position)
 {
-    console.log(position.coords);
     let weatherData = getWeatherJSON(position.coords.latitude, position.coords.longitude);
     weatherData.then((value) =>{
         document.getElementById("WeatherTemperature").innerHTML = value.main.temp + "°";

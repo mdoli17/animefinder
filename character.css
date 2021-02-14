@@ -1,0 +1,45 @@
+button {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    bottom: 10%;
+    transform: translate(-50%, 0);
+}
+body {
+    margin: 0;
+}
+#Container {
+    
+    width: 100vw;
+    background-color: red;
+    height: auto;
+    display: flex;
+}
+
+@media screen and (orientation: landscape) {
+    #CharacterImage {
+        width: auto;
+        height: 80vh;
+    }
+    #Container {
+        flex-direction: row;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    #CharacterImage {
+        width: 100%;
+    }
+    #Container {
+        flex-direction:column;
+    }
+    .text {
+        font-size: 40px;
+    }
+    button {
+        bottom: 10%;
+        width: 50%;
+        height: 30px;
+    }
+
+}

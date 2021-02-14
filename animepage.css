@@ -33,44 +33,147 @@ header {
 
 #MainPage{
     position: relative;
-    height: 100vh;
+    /* height: 70vh; */
     width: 100vw;
     background-color: white;
     z-index: 1;
 }
 
 #DiscriptionContainer {
-    width: 80%;
-    height: 80%;
+    width: 90%;
     min-width: 40vh;
-    background-color: blue;
-    
     margin-left: auto;
     margin-right: auto;
-
-    display: flex;
-    flex-wrap: wrap;
 }
 
 #DiscriptionImage {
     flex-shrink: 0;
-    /* background-color: red; */
-    background-image: url("background.jpg");
-    /* display: inherit; */
-    width: 100%;
+
+
     overflow: hidden;
-    height: 0;
-    padding-top: 56.25%;
+    height: auto;
+    /* padding-top: 56.25%; */
+    object-fit: cover;
     
-    
+}
+#TextInfo {
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    flex-shrink: 0;
+
+    width: 40%;
+    height: 90%; 
+    display: flex;
+    flex-direction: column;
 }
 
 #DiscriptionText {
+
+    text-indent: 50px;
+    text-align: justify;
+    letter-spacing: 2px;
+    font-size: 100%;
+}
+
+#OtherCharacterContainer {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 90%;
+    height: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+.CharacterImageContainer{
+    width: 20vw;
+    height: 35vh;
     flex-shrink: 0;
-    background-color: green;
-    /* display: inherit; */
-    /* min-width: ; */
-    width: 40%;
-    height: 80%; 
-    margin-right: 10%;
+    display: flex;
+    margin: 1%;
+    background-color: bisque;
+    position: relative;
+}
+
+.CharacterImageContainer:hover .CharacterImage {
+    opacity: 0.3;
+}
+.CharacterImageContainer:hover .CharacterNameDiv {
+    opacity: 1;
+}
+.CharacterImage{
+    display: block;
+    transition: .5s ease;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    opacity: 1; 
+}
+
+.text {   
+    /* background-color: #4CAF50; */
+    color: white;
+    font-size: 32px;
+    padding: 16px 32px;
+}
+
+.CharacterNameDiv {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+@media screen and (orientation: portrait) {
+    #DiscriptionContainer{
+        display: flex;
+        flex-direction: column;
+    }
+    #DiscriptionImage {
+        width: 100%;
+    }
+    #TextInfo {
+        font-size: 40px;
+        width: 90%;
+    }
+    #first {
+        width: 100%;
+        border-top: 2px solid grey;
+    }
+    #sec {
+        width: 100%;
+        border-bottom: 1px solid grey;
+    }
+}
+@media screen and (orientation: landscape) {
+    #DiscriptionContainer{
+        display: flex;
+        flex-direction: row;
+        /* align-items: stretch; */
+    }
+    #DiscriptionImage {
+        width: 50%;
+        padding-right: 5px;
+    }
+    #DiscriptionText {
+        text-indent: 50px;
+        text-align: justify;
+        letter-spacing: 2px;
+        font-size: 30px;
+    }
+    #first {
+        border-right: 2px solid grey;
+    }
+    #sec {
+        width: 100%;
+        border-bottom: 1px solid grey;
+    }
 }
